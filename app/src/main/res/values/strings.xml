@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">TalkToME</string>
+    <string name="login_et_username">User name</string>
+    <string name="login_et_password">Password</string>
+    <string name="login_in_button">Log in</string>
 </resources>
