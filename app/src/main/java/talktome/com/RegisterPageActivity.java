@@ -16,6 +16,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +51,19 @@ public class RegisterPageActivity extends AppCompatActivity {
         Button btn_login = findViewById(R.id.register_btn);
         btn_login.setOnClickListener(v -> {
             //get user+nick name and passwords - validate all and send to the server
+            EditText userNameInput = (EditText)findViewById(R.id.editTextPersonName3);
+            String user_name = userNameInput.getText().toString();
+
+            EditText nickNameInput = (EditText)findViewById(R.id.editTextTextPersonName3);
+            String nick_name = nickNameInput.getText().toString();
+
+            EditText firstPasswordInput = (EditText)findViewById(R.id.editTextTextPassword3);
+            String first_password = firstPasswordInput.getText().toString();
+
+            EditText secondPasswordInput = (EditText)findViewById(R.id.editTextTextPassword2);
+            String second_password = secondPasswordInput.getText().toString();
+
+
         });
 
         //upload photo button
@@ -88,6 +102,17 @@ public class RegisterPageActivity extends AppCompatActivity {
                     }
                 }
             });
+
+    //need to complete this and to check how to do alert
+    int validation(String userName, String nickName, String p1, String p2) {
+        if (p1.equals(p2)) {
+            return 3;
+        }
+        if (userName.length()<8 || nickName.length()<8 || p1.length()<8 || p2.length()<8) {
+            return 2;
+        }
+        return 0;
+    }
 
     @Override
     protected void onStop() {
