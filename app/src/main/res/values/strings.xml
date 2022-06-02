@@ -3,4 +3,7 @@
     <string name="login_et_username">User name</string>
     <string name="login_et_password">Password</string>
     <string name="login_in_button">Log in</string>
+    <string name="nick_name_register">Nick name</string>
+    <string name="upload_photo_register">Upload photo</string>
+    <string name="register_button">Register</string>
 </resources>
