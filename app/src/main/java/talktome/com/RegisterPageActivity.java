@@ -5,6 +5,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -16,6 +18,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,6 +53,43 @@ public class RegisterPageActivity extends AppCompatActivity {
         Button btn_login = findViewById(R.id.register_btn);
         btn_login.setOnClickListener(v -> {
             //get user+nick name and passwords - validate all and send to the server
+            EditText userNameInput = (EditText)findViewById(R.id.editTextUserNameRegister);
+            String user_name = userNameInput.getText().toString();
+
+            EditText nickNameInput = (EditText)findViewById(R.id.ditTextNickNameRegister);
+            String nick_name = nickNameInput.getText().toString();
+
+            EditText password1Input = (EditText)findViewById(R.id.editTextTextPassword);
+            String password1 = password1Input.getText().toString();
+
+            EditText password2Input = (EditText)findViewById(R.id.editTextTextPassword2);
+            String password2 = password2Input.getText().toString();
+
+            String outputValidation = validation(user_name, nick_name, password1, password2);
+            if (!outputValidation.equals("Ok")) {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(RegisterPageActivity.this);
+                builder1.setMessage(outputValidation);
+                builder1.setCancelable(true);
+                builder1.setPositiveButton(
+                        "return",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                userNameInput.setText("");
+                                nickNameInput.setText("");
+                                password1Input.setText("");
+                                password2Input.setText("");
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            }
+            else {
+                Intent a = new Intent(RegisterPageActivity.this, MainActivity.class);
+                startActivity(a);
+            }
+
         });
 
         //upload photo button
@@ -57,6 +97,19 @@ public class RegisterPageActivity extends AppCompatActivity {
         btn_upload_photo.setOnClickListener(v -> {
             imageChooser();
         });
+    }
+
+    String validation(String userName, String nickName, String password1, String password2) {
+        if (!password1.equals(password2)) {
+            return "Passwords are not the same";
+        }
+        if (userName.length() < 8 || nickName.length() < 8) {
+            return "user name or nick name less than 8 characters";
+        }
+        if (!password1.matches("(([A-Z].*[0-9])|([0-9].*[A-Z]))")) {
+            return "password need to contain letters and numbers";
+        }
+        return "Ok";
     }
 
     void imageChooser() {
