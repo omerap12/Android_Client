@@ -65,6 +65,7 @@ public class RegisterPageActivity extends AppCompatActivity {
             EditText password2Input = (EditText)findViewById(R.id.editTextTextPassword2);
             String password2 = password2Input.getText().toString();
 
+            //validation
             String outputValidation = validation(user_name, nick_name, password1, password2);
             if (!outputValidation.equals("Ok")) {
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(RegisterPageActivity.this);
@@ -86,10 +87,27 @@ public class RegisterPageActivity extends AppCompatActivity {
                 alert11.show();
             }
             else {
-                Intent a = new Intent(RegisterPageActivity.this, MainActivity.class);
-                startActivity(a);
+                //if validation is ok - go to the sign in page
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(RegisterPageActivity.this);
+                builder1.setMessage("Go to sign in page");
+                builder1.setCancelable(true);
+                builder1.setPositiveButton(
+                        "Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                userNameInput.setText("");
+                                nickNameInput.setText("");
+                                password1Input.setText("");
+                                password2Input.setText("");
+                                dialog.cancel();
+                                // go to the sign in page
+                                Intent a = new Intent(RegisterPageActivity.this, MainActivity.class);
+                                startActivity(a);
+                            }
+                        });
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
-
         });
 
         //upload photo button
@@ -106,7 +124,7 @@ public class RegisterPageActivity extends AppCompatActivity {
         if (userName.length() < 8 || nickName.length() < 8) {
             return "user name or nick name less than 8 characters";
         }
-        if (!password1.matches("(([A-Z].*[0-9])|([0-9].*[A-Z]))")) {
+        if (!password1.matches("([A-Za-z]+[0-9]|[0-9]+[A-Za-z])[A-Za-z0-9]*")) {
             return "password need to contain letters and numbers";
         }
         return "Ok";
