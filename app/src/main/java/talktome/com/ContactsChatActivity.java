@@ -1,9 +1,12 @@
 package talktome.com;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Insert;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 
 public class ContactsChatActivity extends AppCompatActivity {
     private AppDB db;
@@ -16,6 +19,11 @@ public class ContactsChatActivity extends AppCompatActivity {
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
         contactDao = db.contactDao();
 
+        Button addContactButton = findViewById(R.id.addContactButton);
+        addContactButton.setOnClickListener(v -> {
+            Intent i = new Intent(this, AddContactActivity.class);
+            startActivity(i);
+        });
 
     }
 

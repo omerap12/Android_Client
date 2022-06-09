@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             String user_password = passwordInput.getText().toString();
             
             //check validation of user name & password (need to send to server side)
-            Intent i = new Intent(this, ContactsChatActivity.class);
+            Intent i = new Intent(MainActivity.this, ContactsChatActivity.class);
             startActivity(i);
         });
 
