@@ -20,7 +20,7 @@
         android:layout_margin="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_add_new"
+        android:src="@drawable/ic_add_new_contact"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

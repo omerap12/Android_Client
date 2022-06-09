@@ -1,22 +1,28 @@
 package talktome.com;
-
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Contact {
+
+    @PrimaryKey(autoGenerate=false)
+    @NonNull
     private String id;
     private String userName;
     private String nickName;
-    private User userTalkingTo;
     private String lastMessage;
-    private ImageView imageView;
 
-    public Contact(String id, String userName, String nickName, User userTalkingTo, String lastMessage, ImageView imageView) {
+    public Contact(String id, String userName, String nickName, String lastMessage) {
         this.id = id;
         this.userName = userName;
         this.nickName = nickName;
-        this.userTalkingTo = userTalkingTo;
         this.lastMessage = lastMessage;
-        this.imageView = imageView;
+    }
+
+    public Contact(){
     }
 
     public String getId() {
@@ -43,14 +49,6 @@ public class Contact {
         this.nickName = nickName;
     }
 
-    public User getUserTalkingTo() {
-        return userTalkingTo;
-    }
-
-    public void setUserTalkingTo(User userTalkingTo) {
-        this.userTalkingTo = userTalkingTo;
-    }
-
     public String getLastMessage() {
         return lastMessage;
     }
@@ -59,11 +57,4 @@ public class Contact {
         this.lastMessage = lastMessage;
     }
 
-    public ImageView getImageView() {
-        return imageView;
-    }
-
-    public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
-    }
 }
