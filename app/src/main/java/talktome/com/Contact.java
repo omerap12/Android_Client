@@ -10,27 +10,33 @@ public class Contact {
 
     @PrimaryKey(autoGenerate=false)
     @NonNull
-    private String id;
     private String userName;
     private String nickName;
     private String lastMessage;
+    private String server;
 
-    public Contact(String id, String userName, String nickName, String lastMessage) {
-        this.id = id;
+
+
+    public Contact( String userName, String nickName, String lastMessage,String server) {
         this.userName = userName;
         this.nickName = nickName;
-        this.lastMessage = lastMessage;
+        if (lastMessage.isEmpty()) {
+            this.lastMessage="";
+        } else {
+            this.lastMessage = lastMessage;
+        }
+        this.server = server;
     }
 
     public Contact(){
     }
 
-    public String getId() {
-        return id;
+    public String getServer() {
+        return server;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setServer(String server) {
+        this.server = server;
     }
 
     public String getUserName() {
@@ -57,4 +63,13 @@ public class Contact {
         this.lastMessage = lastMessage;
     }
 
+    @Override
+    public String toString() {
+        return "Contact{" +
+                ", userName='" + userName + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", lastMessage='" + lastMessage + '\'' +
+                ", server='" + server + '\'' +
+                '}';
+    }
 }

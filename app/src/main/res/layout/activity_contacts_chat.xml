@@ -13,14 +13,13 @@
         tools:ignore="MissingConstraints">
     </ListView>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addContactButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_add_new_contact"
-        />
+        android:src="@drawable/ic_add_new_contact" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
