@@ -24,6 +24,7 @@ public class ContactsChatActivity extends AppCompatActivity {
     private ListItemAdapter adapterListItem;
     private ListView lvContacts;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +45,6 @@ public class ContactsChatActivity extends AppCompatActivity {
         lvContacts.setAdapter(adapterListItem);
         lvContacts.setClickable(true);
 
-//        Contacts = new ArrayList<>();
-//        adapterListItem = new ArrayAdapter<>(this, R.layout.contact_list_item, this.Contacts);
-//        lvContacts = findViewById(R.id.contacts_list);
-//        lvContacts.setAdapter(adapterListItem);
     }
 
     @Override

@@ -9,7 +9,12 @@ import android.widget.EditText;
 
 public class AddContactActivity extends AppCompatActivity {
     private AppDB db;
+    private ConversationDB conversationDB;
     private ContactDao contactDao;
+    private ConversationDao conversationDao;
+    private MessageDB messageDB;
+    private MessageDao messageDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +24,11 @@ public class AddContactActivity extends AppCompatActivity {
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
         contactDao = db.contactDao();
+        conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().build();
+        conversationDao = conversationDB.conversationDao();
+        messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().build();
+        messageDao = messageDB.messageDao();
+
 
         Button addContactButton = findViewById(R.id.addContactButton);
         addContactButton.setOnClickListener( v -> {
@@ -34,6 +44,7 @@ public class AddContactActivity extends AppCompatActivity {
             //need to validate the new contact before adding to list
             Contact newContact = new Contact( userName, nickName, "", serverName);
             contactDao.insert(newContact);
+            conversationDao.insert(new Conversation("test",userName));
             finish();
         });
     }
