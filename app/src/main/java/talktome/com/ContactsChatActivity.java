@@ -15,10 +15,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import talktome.com.Adapters.ListItemAdapter;
+
 public class ContactsChatActivity extends AppCompatActivity {
     private ContactDao contactDao;
-    private List<Contact> Contacts;
+    private List<Contact> Contacts = new ArrayList<>();
     private ArrayAdapter<Contact> adapter;
+    private ListItemAdapter adapterListItem;
+    private ListView lvContacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +38,16 @@ public class ContactsChatActivity extends AppCompatActivity {
             startActivity(i);
         });
 
-        Contacts = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.Contacts);
-        ListView lvContacts = findViewById(R.id.contacts_list);
-        lvContacts.setAdapter(adapter);
+        Contacts = contactDao.index();
+        lvContacts = findViewById(R.id.contacts_list);
+        adapterListItem = new ListItemAdapter(getApplicationContext(), Contacts);
+        lvContacts.setAdapter(adapterListItem);
+        lvContacts.setClickable(true);
 
+//        Contacts = new ArrayList<>();
+//        adapterListItem = new ArrayAdapter<>(this, R.layout.contact_list_item, this.Contacts);
+//        lvContacts = findViewById(R.id.contacts_list);
+//        lvContacts.setAdapter(adapterListItem);
     }
 
     @Override
@@ -56,6 +65,6 @@ public class ContactsChatActivity extends AppCompatActivity {
         super.onResume();
         Contacts.clear();
         Contacts.addAll(contactDao.index());
-        adapter.notifyDataSetChanged();
+        adapterListItem.notifyDataSetChanged();
     }
 }

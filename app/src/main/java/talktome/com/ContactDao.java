@@ -16,5 +16,4 @@ public interface ContactDao {
 
     @Insert
     void insert(Contact ... contacts);
-
 }
