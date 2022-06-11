@@ -35,4 +35,19 @@ public class ContactApi {
             }
         });
     }
+
+    public void getContactsOfUser(String userId){
+        Call<List<Contact>> call = webServiceApi.getContactsOfUser(userId);
+        call.enqueue(new Callback<List<Contact>>() {
+            @Override
+            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
+                List<Contact> contacts = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<Contact>> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
 }

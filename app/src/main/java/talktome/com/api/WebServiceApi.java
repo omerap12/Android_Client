@@ -12,6 +12,9 @@ public interface WebServiceApi {
     @GET("Contacts")
     Call <List<Contact>> getContacts();
 
+    @GET("{userId}/Contacts")
+    Call <List<Contact>> getContactsOfUser(@Path("userId") String userId);
+
 
 
 

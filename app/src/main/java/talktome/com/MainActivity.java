@@ -24,7 +24,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ContactApi contactApi = new ContactApi();
-        contactApi.getAllContacts();
+        /**
+         * Getting the contacts of specific User
+         * contactApi.getContactsOfUser("TSM_Omer");
+         */
+
+
 
         // login button handler
         Button btn_login = findViewById(R.id.login_btn);
