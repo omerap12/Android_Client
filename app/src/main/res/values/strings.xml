@@ -7,4 +7,5 @@
     <string name="upload_photo_register">Upload photo</string>
     <string name="register_button">Register</string>
     <string name="hey">hey</string>
+    <string name="BaseUrl">http://10.0.2.2:7030/api</string>
 </resources>
