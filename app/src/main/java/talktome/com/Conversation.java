@@ -1,11 +1,21 @@
 package talktome.com;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity (primaryKeys = {"to","from"})
 public class Conversation {
     public List<Message> Messages;
+    @ColumnInfo
+    @NonNull
     public String from;
+    @ColumnInfo
+    @NonNull
     public String to;
     public String last;
     public String id;
