@@ -1,13 +1,10 @@
 package talktome.com;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Insert;
 import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -16,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import talktome.com.Adapters.ListItemAdapter;
+import talktome.com.DB.AppDB;
+import talktome.com.DB.ConversationDB;
+import talktome.com.Dao.ContactDao;
+import talktome.com.Dao.ConversationDao;
 
 public class ContactsChatActivity extends AppCompatActivity {
     private ContactDao contactDao;

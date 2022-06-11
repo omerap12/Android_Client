@@ -7,6 +7,13 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import talktome.com.DB.AppDB;
+import talktome.com.DB.ConversationDB;
+import talktome.com.DB.MessageDB;
+import talktome.com.Dao.ContactDao;
+import talktome.com.Dao.ConversationDao;
+import talktome.com.Dao.MessageDao;
+
 public class AddContactActivity extends AppCompatActivity {
     private AppDB db;
     private ConversationDB conversationDB;
