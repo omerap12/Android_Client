@@ -10,6 +10,7 @@ import talktome.com.MyApplication;
 import talktome.com.R;
 import talktome.com.entities.Contact;
 import talktome.com.entities.Message;
+import talktome.com.entities.ServerName;
 
 public class ContactApi {
     private Retrofit retrofit;
@@ -75,6 +76,20 @@ public class ContactApi {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
+    public void getUserServerName(String userId){
+        Call<List<ServerName>> call = webServiceApi.getUserServerName(userId);
+        call.enqueue(new Callback<List<ServerName>>() {
+            @Override
+            public void onResponse(Call<List<ServerName>> call, Response<List<ServerName>> response) {
+                List<ServerName> serveName = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<ServerName>> call, Throwable t) {
                 System.out.printf("here");
             }
         });

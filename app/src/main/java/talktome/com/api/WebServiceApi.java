@@ -7,6 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import talktome.com.entities.Contact;
 import talktome.com.entities.Message;
+import talktome.com.entities.ServerName;
 
 public interface WebServiceApi {
 
@@ -22,7 +23,8 @@ public interface WebServiceApi {
     @GET("{userId}/Contacts/{password}")
     Call <Void> checkPassword(@Path("userId") String userId, @Path("password") String password);
 
-
+    @GET("Contacts/servername/{userId}")
+    Call <List<ServerName>> getUserServerName(@Path("userId") String userId);
 
 
 

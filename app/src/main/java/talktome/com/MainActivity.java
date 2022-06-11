@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
          *  contactApi.checkPassword("TSM_Omer","123");
          */
 
+        contactApi.getUserServerName("TSM_Omer");
+
 
 
         // login button handler
