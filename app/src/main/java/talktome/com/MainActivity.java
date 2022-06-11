@@ -29,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
          * contactApi.getContactsOfUser("TSM_Omer");
          */
 
+        /**
+         * Getting the messages between users
+         *  contactApi.getMessagesBetweenUsers("TSM_Omer","Avitalos");
+         */
+
 
 
         // login button handler

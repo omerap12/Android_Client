@@ -9,6 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import talktome.com.MyApplication;
 import talktome.com.R;
 import talktome.com.entities.Contact;
+import talktome.com.entities.Message;
 
 public class ContactApi {
     private Retrofit retrofit;
@@ -46,6 +47,20 @@ public class ContactApi {
 
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
+    public void getMessagesBetweenUsers(String userId, String otherId){
+        Call<List<Message>> call = webServiceApi.getMessagesBetweenUsers(userId,otherId);
+        call.enqueue(new Callback<List<Message>>() {
+            @Override
+            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                List<Message> messages = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<List<Message>> call, Throwable t) {
                 System.out.printf("here");
             }
         });
