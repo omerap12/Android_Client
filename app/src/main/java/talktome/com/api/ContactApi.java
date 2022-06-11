@@ -65,4 +65,18 @@ public class ContactApi {
             }
         });
     }
+    public void checkPassword(String userId, String password){
+        Call<Void> call = webServiceApi.checkPassword(userId,password);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
 }

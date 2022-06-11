@@ -33,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
          * Getting the messages between users
          *  contactApi.getMessagesBetweenUsers("TSM_Omer","Avitalos");
          */
+        /**
+         * Check user password -> see status code
+         *  contactApi.checkPassword("TSM_Omer","123");
+         */
 
 
 
