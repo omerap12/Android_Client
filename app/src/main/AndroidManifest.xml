@@ -19,6 +19,9 @@
         android:usesCleartextTraffic="true"
         >
         <activity
+            android:name=".ChatMessagesActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddContactActivity"
             android:exported="false" />
         <activity

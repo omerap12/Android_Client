@@ -5,6 +5,8 @@ import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -51,6 +53,14 @@ public class ContactsChatActivity extends AppCompatActivity {
         adapterListItem = new ListItemAdapter(getApplicationContext(), Conversations);
         lvContacts.setAdapter(adapterListItem);
         lvContacts.setClickable(true);
+
+        lvContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), ChatMessagesActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
