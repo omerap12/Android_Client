@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity (primaryKeys = {"to","from"})
 public class Conversation {
-    public List<Message> Messages;
     @ColumnInfo
     @NonNull
     public String from;
@@ -24,11 +23,6 @@ public class Conversation {
     public Conversation(String from, String to) {
         this.from = from;
         this.to = to;
-        Messages = new ArrayList<>(Messages);
-    }
-
-    public List<Message> getMessages() {
-        return Messages;
     }
 
     public String getFrom() {
@@ -49,10 +43,6 @@ public class Conversation {
 
     public String getLastdate() {
         return lastdate;
-    }
-
-    public void setMessages(List<Message> messages) {
-        Messages = messages;
     }
 
     public void setFrom(String from) {
@@ -79,19 +69,6 @@ public class Conversation {
     /**
      * functionality functions
      */
-
-    public int GetMessageLength()
-    {
-        return Messages.size();
-    }
-
-    public void addMessage(Message message){
-        this.last = message.Content;
-        message.Id = String.valueOf(( GetMessageLength()+1 ));
-        this.Messages.add(message);
-        this.lastdate = message.Created;
-    }
-
     public boolean isMe(String name){
         if (this.from == name || this.to == name)
             return true;

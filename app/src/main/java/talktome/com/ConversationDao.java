@@ -9,7 +9,7 @@ import java.util.List;
 public interface ConversationDao {
 
     @Query("SELECT * FROM conversation")
-    List<Message> index();
+    List<Conversation> index();
 
     @Query("SELECT * FROM conversation WHERE `to` == :myId AND `from` == :OtherId OR `from` == :myId AND `to` == :OtherId")
     Conversation getSpecificConversation(String myId, String OtherId);

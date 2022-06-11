@@ -9,7 +9,9 @@ import android.widget.EditText;
 
 public class AddContactActivity extends AppCompatActivity {
     private AppDB db;
+    private ConversationDB conversationDB;
     private ContactDao contactDao;
+    private ConversationDao conversationDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,7 +20,7 @@ public class AddContactActivity extends AppCompatActivity {
         //example
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
-        contactDao = db.contactDao();
+        conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().build();
 
         Button addContactButton = findViewById(R.id.addContactButton);
         addContactButton.setOnClickListener( v -> {
