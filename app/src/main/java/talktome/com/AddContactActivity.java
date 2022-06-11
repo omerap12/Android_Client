@@ -12,6 +12,8 @@ public class AddContactActivity extends AppCompatActivity {
     private ConversationDB conversationDB;
     private ContactDao contactDao;
     private ConversationDao conversationDao;
+    private MessageDB messageDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +23,8 @@ public class AddContactActivity extends AppCompatActivity {
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
         conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().build();
+        messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().build();
+
 
         Button addContactButton = findViewById(R.id.addContactButton);
         addContactButton.setOnClickListener( v -> {
