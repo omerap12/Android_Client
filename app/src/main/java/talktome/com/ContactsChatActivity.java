@@ -18,7 +18,9 @@ import java.util.List;
 public class ContactsChatActivity extends AppCompatActivity {
     private ContactDao contactDao;
     private List<Contact> Contacts;
+    private List<Conversation> conversations;
     private ArrayAdapter<Contact> adapter;
+    private ArrayAdapter<Conversation> conversationArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +36,10 @@ public class ContactsChatActivity extends AppCompatActivity {
             startActivity(i);
         });
 
+        conversations = new ArrayList<>();
         Contacts = new ArrayList<>();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.Contacts);
+        conversationArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.conversations);
         ListView lvContacts = findViewById(R.id.contacts_list);
         lvContacts.setAdapter(adapter);
 
