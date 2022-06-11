@@ -16,7 +16,6 @@ public class Contact {
     private String server;
 
 
-
     public Contact( String userName, String nickName, String lastMessage,String server) {
         this.userName = userName;
         this.nickName = nickName;
