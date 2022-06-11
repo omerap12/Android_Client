@@ -1,7 +1,6 @@
-package talktome;
+package talktome.com;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import talktome.com.R;
 
 public class ChatMessagesActivity extends AppCompatActivity {
 

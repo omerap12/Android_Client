@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="16dp"
+    android:paddingBottom="7dp">
+
+    <TextView
+        android:id="@+id/other_user_id_for_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Omer Aplatony"
+        android:textSize="16sp"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_chat_message_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#eef1f6"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toBottomOf="@+id/other_user_id_for_message"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/layout_gchat_container_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_message_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:maxWidth="260dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="8dp"
+                android:paddingRight="12dp"
+                android:text="Message"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/message_time_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8:00"
+        android:textColor="#C0C0C0"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/card_chat_message_other"
+        app:layout_constraintStart_toEndOf="@+id/card_chat_message_other" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
