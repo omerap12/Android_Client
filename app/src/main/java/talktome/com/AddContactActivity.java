@@ -13,6 +13,7 @@ import talktome.com.DB.MessageDB;
 import talktome.com.Dao.ContactDao;
 import talktome.com.Dao.ConversationDao;
 import talktome.com.Dao.MessageDao;
+import talktome.com.api.ContactApi;
 
 public class AddContactActivity extends AppCompatActivity {
     private AppDB db;

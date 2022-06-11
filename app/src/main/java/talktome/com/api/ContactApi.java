@@ -1,7 +1,6 @@
 package talktome.com.api;
 
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +31,7 @@ public class ContactApi {
 
             @Override
             public void onFailure(Call<List<Contact>> call, Throwable t) {
+                System.out.printf("here");
             }
         });
     }
