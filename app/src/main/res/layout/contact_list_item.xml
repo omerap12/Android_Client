@@ -14,12 +14,17 @@
             android:layout_height="101dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="20dp"
-                android:src="@drawable/logoo" />
+                android:src="@drawable/logoo"
+                app:civ_border_width="1dp"
+                app:civ_border_color="#FF000000"/>
+
 
             <LinearLayout
                 android:layout_width="216dp"

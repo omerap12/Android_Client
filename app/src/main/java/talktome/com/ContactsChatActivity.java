@@ -20,9 +20,11 @@ import talktome.com.Adapters.ListItemAdapter;
 public class ContactsChatActivity extends AppCompatActivity {
     private ContactDao contactDao;
     private List<Contact> Contacts = new ArrayList<>();
-    private ArrayAdapter<Contact> adapter;
+    private List<Conversation> Conversations = new ArrayList<>();
     private ListItemAdapter adapterListItem;
     private ListView lvContacts;
+    private ConversationDB conversationDB;
+    private ConversationDao conversationDao;
 
 
     @Override
@@ -33,15 +35,19 @@ public class ContactsChatActivity extends AppCompatActivity {
         AppDB db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().build();
         contactDao = db.contactDao();
 
+        conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().build();
+        conversationDao = conversationDB.conversationDao();
+
         FloatingActionButton addContactButton = findViewById(R.id.addContactButton);
         addContactButton.setOnClickListener(v -> {
             Intent i = new Intent(this, AddContactActivity.class);
             startActivity(i);
         });
 
+        Conversations = conversationDao.index();
         Contacts = contactDao.index();
         lvContacts = findViewById(R.id.contacts_list);
-        adapterListItem = new ListItemAdapter(getApplicationContext(), Contacts);
+        adapterListItem = new ListItemAdapter(getApplicationContext(), Conversations);
         lvContacts.setAdapter(adapterListItem);
         lvContacts.setClickable(true);
 
@@ -60,8 +66,8 @@ public class ContactsChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Contacts.clear();
-        Contacts.addAll(contactDao.index());
+        Conversations.clear();
+        Conversations.addAll(conversationDao.index());
         adapterListItem.notifyDataSetChanged();
     }
 }
