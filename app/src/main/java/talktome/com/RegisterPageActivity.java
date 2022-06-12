@@ -3,6 +3,7 @@ package talktome.com;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,14 +26,22 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import talktome.com.DB.AppDB;
+import talktome.com.Dao.ContactDao;
+
 
 public class RegisterPageActivity extends AppCompatActivity {
     ImageView imageView;
+    private AppDB db;
+    private ContactDao contactDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        contactDao = db.contactDao();
 
         //the click to go back to main activity
         String text = "Already registered? click here";
@@ -87,6 +96,7 @@ public class RegisterPageActivity extends AppCompatActivity {
                 alert11.show();
             }
             else {
+                contactDao.insert(new Contact(user_name, nick_name, "", "server"));
                 //if validation is ok - go to the sign in page
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(RegisterPageActivity.this);
                 builder1.setMessage("Go to sign in page");

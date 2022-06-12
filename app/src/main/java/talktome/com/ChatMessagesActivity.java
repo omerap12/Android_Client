@@ -47,10 +47,9 @@ public class ChatMessagesActivity extends AppCompatActivity {
         messageDao = messageDB.messageDao();
 
         MessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
-        MessageAdapter = new ListMessagesAdapter(this, messageDao.index(), this.userName);
+        MessageAdapter = new ListMessagesAdapter(this, messageDao.getMessagesBetweenUsers(this.userName, this.contactName), this.userName);
         MessageRecycler.setLayoutManager(new LinearLayoutManager(this));
         MessageRecycler.setAdapter(MessageAdapter);
-
 
 
         TextView contactTalkingTo = findViewById(R.id.chat_user_name_connected);

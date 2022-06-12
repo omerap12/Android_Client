@@ -2,6 +2,7 @@ package talktome.com;
 
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,16 +17,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 //import talktome.com.api.ContactApi;
-import talktome.com.entities.Contact;
+import talktome.com.DB.AppDB;
+import talktome.com.Dao.ContactDao;
 import talktome.com.entities.PostContact;
 
 public class MainActivity extends AppCompatActivity {
-
+    private AppDB db;
+    private ContactDao contactDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //ContactApi contactApi = new ContactApi();
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        contactDao = db.contactDao();
+
         /**
          * Getting the contacts of specific User
          * contactApi.getContactsOfUser("TSM_Omer");
