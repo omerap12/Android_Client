@@ -1,18 +1,16 @@
 package talktome.com;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
 import talktome.com.DB.AppDB;
 import talktome.com.DB.ConversationDB;
-import talktome.com.DB.MessageDB;
 import talktome.com.Dao.ContactDao;
 import talktome.com.Dao.ConversationDao;
-import talktome.com.Dao.MessageDao;
 //import talktome.com.api.ContactApi;
 
 public class AddContactActivity extends AppCompatActivity {
@@ -20,8 +18,6 @@ public class AddContactActivity extends AppCompatActivity {
     private ConversationDB conversationDB;
     private ContactDao contactDao;
     private ConversationDao conversationDao;
-    private MessageDB messageDB;
-    private MessageDao messageDao;
     private String userName;
 
     @Override
@@ -33,14 +29,11 @@ public class AddContactActivity extends AppCompatActivity {
         contactDao = db.contactDao();
         conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         conversationDao = conversationDB.conversationDao();
-        messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
-        messageDao = messageDB.messageDao();
 
         Bundle user_registered = getIntent().getExtras();
         if (user_registered != null) {
             this.userName = user_registered.getString("userName");
         }
-
 
         Button addContactButton = findViewById(R.id.addContactButton);
         addContactButton.setOnClickListener( v -> {
@@ -59,5 +52,11 @@ public class AddContactActivity extends AppCompatActivity {
             conversationDao.insert(new Conversation(this.userName,userNameOther));
             finish();
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }

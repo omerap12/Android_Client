@@ -1,23 +1,15 @@
 package talktome.com;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Entity (primaryKeys = {"to","from"})
+@Entity
 public class Conversation {
-    @ColumnInfo
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
+    public int id;
     public String from;
-    @ColumnInfo
-    @NonNull
     public String to;
     public String last;
-    public String id;
     public String lastdate;
 
     public Conversation(String from, String to) {
@@ -37,10 +29,6 @@ public class Conversation {
         return last;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public String getLastdate() {
         return lastdate;
     }
@@ -57,9 +45,6 @@ public class Conversation {
         this.last = last;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public void setLastdate(String lastdate) {
         this.lastdate = lastdate;

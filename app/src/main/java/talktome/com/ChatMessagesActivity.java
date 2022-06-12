@@ -1,24 +1,23 @@
 package talktome.com;
-import androidx.annotation.RequiresApi;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import talktome.com.Adapters.ListMessagesAdapter;
-import talktome.com.DB.ConversationDB;
 import talktome.com.DB.MessageDB;
 import talktome.com.Dao.MessageDao;
 
@@ -45,9 +44,9 @@ public class ChatMessagesActivity extends AppCompatActivity {
         listOfMessages = new ArrayList<>();
         messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         messageDao = messageDB.messageDao();
-
+        listOfMessages = messageDao.getMessagesBetweenUsers(this.userName, this.contactName);
         MessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
-        MessageAdapter = new ListMessagesAdapter(this, messageDao.getMessagesBetweenUsers(this.userName, this.contactName), this.userName);
+        MessageAdapter = new ListMessagesAdapter(this, listOfMessages, this.userName);
         MessageRecycler.setLayoutManager(new LinearLayoutManager(this));
         MessageRecycler.setAdapter(MessageAdapter);
 
@@ -63,15 +62,18 @@ public class ChatMessagesActivity extends AppCompatActivity {
                 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
                 Date date = new Date();
                 messageDao.insert(new Message(this.userName, this.contactName, text, formatter.format(date)));
+                listOfMessages.add(new Message(this.userName, this.contactName, text, formatter.format(date)));
                 textInput.setText("");
+                onResume();
             }
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onResume() {
         super.onResume();
-
+        MessageAdapter.notifyDataSetChanged();
+        MessageRecycler.setVisibility(View.VISIBLE);
     }
-
 }

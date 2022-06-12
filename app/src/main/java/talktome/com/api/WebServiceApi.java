@@ -1,7 +1,4 @@
 package talktome.com.api;
-import android.telecom.Call;
-
-import androidx.room.Query;
 
 import java.util.List;
 import retrofit2.Call;
