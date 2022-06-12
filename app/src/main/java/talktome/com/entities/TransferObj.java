@@ -1,4 +1,4 @@
-package talktome.com.api;
+package talktome.com.entities;
 
 public class TransferObj {
     private String from;

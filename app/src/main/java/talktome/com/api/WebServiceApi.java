@@ -9,9 +9,9 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import talktome.com.entities.Contact;
+import talktome.com.entities.InviteObj;
 import talktome.com.entities.Message;
-import talktome.com.entities.PostContact;
-import talktome.com.entities.ServerName;
+import talktome.com.entities.TransferObj;
 
 public interface WebServiceApi {
 
@@ -41,6 +41,9 @@ public interface WebServiceApi {
 
     @POST("Transfer")
     Call <Void> Transfer(@Body TransferObj transferObj);
+
+    @POST("invitations")
+    Call <Void> Invite (@Body InviteObj inviteObj);
 
 
 

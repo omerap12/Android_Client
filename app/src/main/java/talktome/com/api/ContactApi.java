@@ -9,14 +9,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 import talktome.com.MyApplication;
 import talktome.com.R;
 import talktome.com.entities.Contact;
+import talktome.com.entities.InviteObj;
 import talktome.com.entities.Message;
-import talktome.com.entities.PostContact;
-import talktome.com.entities.ServerName;
+import talktome.com.entities.TransferObj;
 
 public class ContactApi {
     private Retrofit retrofit;
@@ -147,6 +145,20 @@ public class ContactApi {
     }
     public void Transfer(TransferObj transferObj){
         Call<Void> call = webServiceApi.Transfer(transferObj);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
+    public void Invite(InviteObj inviteObj){
+        Call<Void> call = webServiceApi.Invite(inviteObj);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call <Void> call, Response<Void> response) {

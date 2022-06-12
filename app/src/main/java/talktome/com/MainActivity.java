@@ -1,6 +1,5 @@
 package talktome.com;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -16,9 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import talktome.com.api.ContactApi;
-import talktome.com.api.TransferObj;
-import talktome.com.entities.Contact;
-import talktome.com.entities.PostContact;
+import talktome.com.entities.InviteObj;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
          * Transfer
          *  contactApi.Transfer(new TransferObj("from","to","content"));
          */
+
+        contactApi.Invite(new InviteObj("TSM_Omer","KIM","USA"));
 
 
 
