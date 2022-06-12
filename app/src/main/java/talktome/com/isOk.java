@@ -7,6 +7,7 @@ public class isOk {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String userId;
+    private boolean isok;
 
     public String getUserId() {
         return userId;
@@ -31,8 +32,6 @@ public class isOk {
     public void setIsok(boolean isok) {
         this.isok = isok;
     }
-
-    private boolean isok;
 
     public isOk(String userId, boolean isok) {
         this.isok = isok;

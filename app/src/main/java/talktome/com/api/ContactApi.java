@@ -123,7 +123,6 @@ public class ContactApi {
                     isOkDao.insert(new isOk(userId, false));
                 }
                 Void check = response.body();
-
             }
 
             @Override

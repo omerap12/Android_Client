@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import java.util.List;
+
 import talktome.com.DB.AppDB;
 import talktome.com.DB.ConversationDB;
 import talktome.com.DB.IsOkDB;
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         isOkDao = isOkDB.isOkDao();
 
         ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao, isOkDao);
-        contactApi.checkPassword("TSM_Omer","12345");
 
         /**
          * Getting the contacts of specific User
@@ -108,12 +109,18 @@ public class MainActivity extends AppCompatActivity {
             userNameInput.setText("");
             passwordInput.setText("");
             //check validation of user name & password (need to send to server side)
-
-            Intent i = new Intent(MainActivity.this, ContactsChatActivity.class);
-            i.putExtra("userName", user_name);
-            startActivity(i);
+            contactApi.checkPassword(user_name, user_password);
+            List<isOk> list = isOkDao.index();
+//            System.out.println("ht");
+//            if (isOkDao.index().get(0).isIsok()==true) {
+//                isOkDao.delete(isOkDao.index().get(0));
+//                Intent i = new Intent(MainActivity.this, ContactsChatActivity.class);
+//                i.putExtra("userName", user_name);
+//                startActivity(i);
+//            }
+//            isOkDao.delete(isOkDao.index().get(0));
+//            //notify if not true
         });
-
 
 
         TextView textView = findViewById(R.id.textView1);
