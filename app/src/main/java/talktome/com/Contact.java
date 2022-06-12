@@ -7,9 +7,8 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Contact {
-
-    @PrimaryKey(autoGenerate=false)
     @NonNull
+    @PrimaryKey(autoGenerate=false)
     private String userName;
     private String nickName;
     private String lastMessage;
