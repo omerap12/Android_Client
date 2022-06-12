@@ -61,10 +61,13 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Transfer
-         *  contactApi.Transfer(new TransferObj("from","to","content"));
+         * contactApi.Transfer(new TransferObj("from","to","content"));
          */
 
-        contactApi.Invite(new InviteObj("TSM_Omer","KIM","USA"));
+        /**
+         * Invite
+         * contactApi.Invite(new InviteObj("TSM_Omer","KIM","USA"));
+         */
 
 
 
