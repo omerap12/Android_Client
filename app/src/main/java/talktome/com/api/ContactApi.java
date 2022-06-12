@@ -12,6 +12,7 @@ import talktome.com.Contact;
 import talktome.com.Conversation;
 import talktome.com.Dao.ContactDao;
 import talktome.com.Dao.ConversationDao;
+import talktome.com.Dao.IsOkDao;
 import talktome.com.Dao.MessageDao;
 import talktome.com.Message;
 import talktome.com.MyApplication;
@@ -20,6 +21,7 @@ import talktome.com.entities.ContactAPI;
 import talktome.com.entities.InviteObj;
 import talktome.com.entities.MessageAPI;
 import talktome.com.entities.TransferObj;
+import talktome.com.isOk;
 
 public class ContactApi {
     private static Retrofit retrofit;
@@ -27,9 +29,10 @@ public class ContactApi {
     private ContactDao contactDao;
     private MessageDao messageDao;
     private ConversationDao conversationDao;
+    private IsOkDao isOkDao;
     public boolean isOk;
 
-    public ContactApi(MessageDao messageDao1, ContactDao contactDao1, ConversationDao conversationDao1) {
+    public ContactApi(MessageDao messageDao1, ContactDao contactDao1, ConversationDao conversationDao1, IsOkDao isOkDao1) {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -41,6 +44,7 @@ public class ContactApi {
         contactDao = contactDao1;
         messageDao = messageDao1;
         conversationDao = conversationDao1;
+        isOkDao = isOkDao1;
     }
 
     public void getAllContacts(){
@@ -112,11 +116,11 @@ public class ContactApi {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 //user name and password are correct
                 if (response.code() == 200){
-                   isOk = true;
+                   isOkDao.insert(new isOk(userId, true));
                 }
                 else {
                     //incorrect
-                    isOk = false;
+                    isOkDao.insert(new isOk(userId, false));
                 }
                 Void check = response.body();
 

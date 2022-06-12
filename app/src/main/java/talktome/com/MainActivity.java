@@ -1,8 +1,5 @@
 package talktome.com;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -14,13 +11,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+
+import talktome.com.DB.AppDB;
 import talktome.com.DB.ConversationDB;
+import talktome.com.DB.IsOkDB;
 import talktome.com.DB.MessageDB;
+import talktome.com.Dao.ContactDao;
 import talktome.com.Dao.ConversationDao;
+import talktome.com.Dao.IsOkDao;
 import talktome.com.Dao.MessageDao;
 import talktome.com.api.ContactApi;
-import talktome.com.DB.AppDB;
-import talktome.com.Dao.ContactDao;
 
 public class MainActivity extends AppCompatActivity {
     private AppDB db;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private ContactDao contactDao;
     private MessageDao messageDao;
     private ConversationDao conversationDao;
+    private IsOkDao isOkDao;
+    private IsOkDB isOkDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +44,12 @@ public class MainActivity extends AppCompatActivity {
         messageDao = messageDB.messageDao();
         conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         conversationDao = conversationDB.conversationDao();
+        isOkDB = Room.databaseBuilder(getApplicationContext(), IsOkDB.class, "isOkDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        isOkDao = isOkDB.isOkDao();
 
-        ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao);
+        ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao, isOkDao);
         contactApi.checkPassword("TSM_Omer","12345");
-        boolean a = contactApi.isOk;
+
         /**
          * Getting the contacts of specific User
          * contactApi.getContactsOfUser("TSM_Omer");
