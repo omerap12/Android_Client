@@ -38,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
          *  contactApi.checkPassword("TSM_Omer","123");
          */
 
-        contactApi.getUserServerName("TSM_Omer");
+        /**
+         * Get user server name -> doesn't work
+         *  contactApi.getUserServerName("TSM_Omer");
+         */
 
 
 
