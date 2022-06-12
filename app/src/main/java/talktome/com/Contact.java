@@ -15,11 +15,7 @@ public class Contact {
 
     public Contact( String userName, String lastMessage) {
         this.userName = userName;
-        if (lastMessage.isEmpty()) {
-            this.lastMessage="";
-        } else {
-            this.lastMessage = lastMessage;
-        }
+        this.lastMessage = lastMessage;
     }
 
     public Contact(){

@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         conversationDao = conversationDB.conversationDao();
 
         ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao);
-        contactApi.getContactsOfUser("TSM_Omer");
 
         /**
          * Getting the contacts of specific User

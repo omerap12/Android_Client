@@ -9,7 +9,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import talktome.com.entities.ContactAPI;
 import talktome.com.entities.InviteObj;
-import talktome.com.entities.Message;
+import talktome.com.entities.MessageAPI;
 import talktome.com.entities.TransferObj;
 
 public interface WebServiceApi {
@@ -21,7 +21,7 @@ public interface WebServiceApi {
     Call <List<ContactAPI>> getContactsOfUser(@Path("userId") String userId);
 
     @GET("{userId}/Contacts/{otherId}/Messages")
-    Call <List<Message>> getMessagesBetweenUsers(@Path("userId") String userId, @Path("otherId") String otherId);
+    Call <List<MessageAPI>> getMessagesBetweenUsers(@Path("userId") String userId, @Path("otherId") String otherId);
 
     @GET("{userId}/Contacts/{password}")
     Call <Void> checkPassword(@Path("userId") String userId, @Path("password") String password);

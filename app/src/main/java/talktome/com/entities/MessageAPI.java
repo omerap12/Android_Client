@@ -1,11 +1,11 @@
 package talktome.com.entities;
 
-public class Message {
+public class MessageAPI {
     public String id;
     public String content;
     public String created;
     public boolean sent;
-    public Message(String id, String content, String created, boolean sent)
+    public MessageAPI(String id, String content, String created, boolean sent)
     {
         this.id = id;
         this.content = content;

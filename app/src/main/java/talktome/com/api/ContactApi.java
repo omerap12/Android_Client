@@ -1,5 +1,4 @@
 package talktome.com.api;
-import androidx.room.Room;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,17 +10,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import talktome.com.Contact;
 import talktome.com.Conversation;
-import talktome.com.DB.AppDB;
-import talktome.com.DB.ConversationDB;
-import talktome.com.DB.MessageDB;
 import talktome.com.Dao.ContactDao;
 import talktome.com.Dao.ConversationDao;
 import talktome.com.Dao.MessageDao;
+import talktome.com.Message;
 import talktome.com.MyApplication;
 import talktome.com.R;
 import talktome.com.entities.ContactAPI;
 import talktome.com.entities.InviteObj;
-import talktome.com.entities.Message;
+import talktome.com.entities.MessageAPI;
 import talktome.com.entities.TransferObj;
 
 public class ContactApi {
@@ -51,6 +48,12 @@ public class ContactApi {
             @Override
             public void onResponse(Call<List<ContactAPI>> call, Response<List<ContactAPI>> response) {
                 List<ContactAPI> contactAPIS = response.body();
+                for (int i=0; i < contactAPIS.size(); i++) {
+                    Contact contact = new Contact(contactAPIS.get(i).id, contactAPIS.get(i).last);
+                    if (contactDao.get(contact.getUserName()) == null) {
+                        contactDao.insert(contact);
+                    }
+                }
             }
 
             @Override
@@ -79,15 +82,24 @@ public class ContactApi {
         });
     }
     public void getMessagesBetweenUsers(String userId, String otherId){
-        Call<List<Message>> call = webServiceApi.getMessagesBetweenUsers(userId,otherId);
-        call.enqueue(new Callback<List<Message>>() {
+        Call<List<MessageAPI>> call = webServiceApi.getMessagesBetweenUsers(userId,otherId);
+        call.enqueue(new Callback<List<MessageAPI>>() {
             @Override
-            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-                List<Message> messages = response.body();
+            public void onResponse(Call<List<MessageAPI>> call, Response<List<MessageAPI>> response) {
+                List<MessageAPI> messageAPIS = response.body();
+                for (int i = 0; i < messageAPIS.size(); i++) {
+                    Message message;
+                    if (messageAPIS.get(i).sent) {
+                        message = new Message(userId, otherId, messageAPIS.get(i).content, messageAPIS.get(i).created);
+                    } else {
+                        message = new Message(otherId, userId, messageAPIS.get(i).content, messageAPIS.get(i).created);
+                    }
+                    messageDao.insert(message);
+                }
             }
 
             @Override
-            public void onFailure(Call<List<Message>> call, Throwable t) {
+            public void onFailure(Call<List<MessageAPI>> call, Throwable t) {
                 System.out.printf("here");
             }
         });
