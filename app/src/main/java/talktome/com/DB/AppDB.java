@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase;
 import talktome.com.Contact;
 import talktome.com.Dao.ContactDao;
 
-@Database(entities = {Contact.class}, version = 10)
+@Database(entities = {Contact.class}, version = 20)
 public abstract class AppDB extends RoomDatabase {
     public abstract ContactDao contactDao();
 }

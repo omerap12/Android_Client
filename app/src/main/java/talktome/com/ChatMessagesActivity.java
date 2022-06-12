@@ -59,6 +59,8 @@ public class ChatMessagesActivity extends AppCompatActivity {
         messageDao = messageDB.messageDao();
 
 
+        //getting all the messages from the server
+        contactApi.getMessagesBetweenUsers(this.userName,this.contactName);
         listOfMessages = messageDao.getMessagesBetweenUsers(this.userName, this.contactName);
         MessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
         MessageAdapter = new ListMessagesAdapter(this, listOfMessages, this.userName);
@@ -76,7 +78,10 @@ public class ChatMessagesActivity extends AppCompatActivity {
             if (!text.equals("")) {
                 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
                 Date date = new Date();
-                messageDao.insert(new Message(this.userName, this.contactName, text, formatter.format(date)));
+//                messageDao.insert(new Message(this.userName, this.contactName, text, formatter.format(date)));
+
+                //sending the message to the server
+                contactApi.sendMessageFromUserIdToId(this.userName,this.contactName,text);
                 listOfMessages.add(new Message(this.userName, this.contactName, text, formatter.format(date)));
                 textInput.setText("");
                 onResume();
