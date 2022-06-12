@@ -15,8 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-//import talktome.com.api.ContactApi;
+import talktome.com.api.ContactApi;
 import talktome.com.DB.AppDB;
 import talktome.com.Dao.ContactDao;
 import talktome.com.entities.PostContact;
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //ContactApi contactApi = new ContactApi();
+        ContactApi contactApi = new ContactApi();
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         contactDao = db.contactDao();
