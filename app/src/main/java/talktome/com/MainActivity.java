@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import talktome.com.api.ContactApi;
+import talktome.com.entities.Contact;
+import talktome.com.entities.PostContact;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +40,16 @@ public class MainActivity extends AppCompatActivity {
          *  contactApi.checkPassword("TSM_Omer","123");
          */
 
-        contactApi.getUserServerName("TSM_Omer");
+        /**
+         * Get user server name -> doesn't work
+         *  contactApi.getUserServerName("TSM_Omer");
+         */
+
+        /**
+         * Add contact to specific contact -> userId the one to add too and all the other fields
+         * are the added user data
+         * contactApi.addContactToUser("TSM_Omer","Test2","testtest","localhost:7030");
+         */
 
 
 

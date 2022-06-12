@@ -1,5 +1,8 @@
 package talktome.com.api;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -10,6 +13,7 @@ import talktome.com.MyApplication;
 import talktome.com.R;
 import talktome.com.entities.Contact;
 import talktome.com.entities.Message;
+import talktome.com.entities.PostContact;
 import talktome.com.entities.ServerName;
 
 public class ContactApi {
@@ -17,9 +21,12 @@ public class ContactApi {
     private WebServiceApi webServiceApi;
 
     public ContactApi() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         webServiceApi = retrofit.create(WebServiceApi.class);
     }
@@ -81,17 +88,35 @@ public class ContactApi {
         });
     }
     public void getUserServerName(String userId){
-        Call<List<ServerName>> call = webServiceApi.getUserServerName(userId);
-        call.enqueue(new Callback<List<ServerName>>() {
+        Call<String> call = webServiceApi.getUserServerName(userId);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<List<ServerName>> call, Response<List<ServerName>> response) {
-                List<ServerName> serveName = response.body();
+            public void onResponse(Call <String> call, Response<String> response) {
+                String serveName = response.body();
             }
 
             @Override
-            public void onFailure(Call<List<ServerName>> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 System.out.printf("here");
             }
         });
     }
+    public void addContactToUser(String userId, String id, String name, String server){
+        Call<Void> call = webServiceApi.addContactToUser(userId,id,name,server);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
+
+
+
+
 }
