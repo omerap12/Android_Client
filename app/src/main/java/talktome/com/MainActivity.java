@@ -53,10 +53,8 @@ public class MainActivity extends AppCompatActivity {
         messageDao = messageDB.messageDao();
         conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         conversationDao = conversationDB.conversationDao();
-        isOkDB = Room.databaseBuilder(getApplicationContext(), IsOkDB.class, "isOkDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
-        isOkDao = isOkDB.isOkDao();
 
-        ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao, isOkDao);
+        ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao);
 
         /**
          * Getting the contacts of specific User
@@ -104,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
          */
 
 
-
-
         // login button handler
         Button btn_login = findViewById(R.id.login_btn);
         btn_login.setOnClickListener(v -> {
@@ -124,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
             WebServiceApi webServiceApi = retrofit.create(WebServiceApi.class);
+
             Call<Void> call = webServiceApi.checkPassword(user_name,user_password);
 
             call.enqueue(new Callback<Void>() {

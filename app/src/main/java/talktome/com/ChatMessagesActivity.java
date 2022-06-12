@@ -18,14 +18,23 @@ import java.util.Date;
 import java.util.List;
 
 import talktome.com.Adapters.ListMessagesAdapter;
+import talktome.com.DB.AppDB;
+import talktome.com.DB.ConversationDB;
 import talktome.com.DB.MessageDB;
+import talktome.com.Dao.ContactDao;
+import talktome.com.Dao.ConversationDao;
 import talktome.com.Dao.MessageDao;
+import talktome.com.api.ContactApi;
 
 public class ChatMessagesActivity extends AppCompatActivity {
     private RecyclerView MessageRecycler;
     private ListMessagesAdapter MessageAdapter;
-    private MessageDao messageDao;
+    private AppDB db;
     private MessageDB messageDB;
+    private ConversationDB conversationDB;
+    private ContactDao contactDao;
+    private MessageDao messageDao;
+    private ConversationDao conversationDao;
     private List<Message> listOfMessages;
     private String userName;
     private String contactName;
@@ -33,6 +42,11 @@ public class ChatMessagesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_messages);
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        contactDao = db.contactDao();
+        conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        conversationDao = conversationDB.conversationDao();
 
         Bundle fromIntent = getIntent().getExtras();
         if (fromIntent != null) {
@@ -44,6 +58,10 @@ public class ChatMessagesActivity extends AppCompatActivity {
         listOfMessages = new ArrayList<>();
         messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         messageDao = messageDB.messageDao();
+
+        ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao);
+        contactApi.getContactsOfUser(this.userName);
+
         listOfMessages = messageDao.getMessagesBetweenUsers(this.userName, this.contactName);
         MessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
         MessageAdapter = new ListMessagesAdapter(this, listOfMessages, this.userName);

@@ -2,7 +2,9 @@ package talktome.com.api;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -12,7 +14,6 @@ import talktome.com.Contact;
 import talktome.com.Conversation;
 import talktome.com.Dao.ContactDao;
 import talktome.com.Dao.ConversationDao;
-import talktome.com.Dao.IsOkDao;
 import talktome.com.Dao.MessageDao;
 import talktome.com.Message;
 import talktome.com.MyApplication;
@@ -21,7 +22,6 @@ import talktome.com.entities.ContactAPI;
 import talktome.com.entities.InviteObj;
 import talktome.com.entities.MessageAPI;
 import talktome.com.entities.TransferObj;
-import talktome.com.isOk;
 
 public class ContactApi {
     private static Retrofit retrofit;
@@ -29,10 +29,8 @@ public class ContactApi {
     private ContactDao contactDao;
     private MessageDao messageDao;
     private ConversationDao conversationDao;
-    private IsOkDao isOkDao;
-    public boolean isOk;
 
-    public ContactApi(MessageDao messageDao1, ContactDao contactDao1, ConversationDao conversationDao1, IsOkDao isOkDao1) {
+    public ContactApi(MessageDao messageDao1, ContactDao contactDao1, ConversationDao conversationDao1) {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -44,7 +42,6 @@ public class ContactApi {
         contactDao = contactDao1;
         messageDao = messageDao1;
         conversationDao = conversationDao1;
-        isOkDao = isOkDao1;
     }
 
     public void getAllContacts(){
@@ -75,8 +72,13 @@ public class ContactApi {
             public void onResponse(Call<List<ContactAPI>> call, Response<List<ContactAPI>> response) {
                 List<ContactAPI> contactAPIS = response.body();
                 for (int i=0; i < contactAPIS.size(); i++) {
-                    conversationDao.insert(new Conversation(userId, contactAPIS.get(i).id, contactAPIS.get(i).last, contactAPIS.get(i).lastDate));
-                    contactDao.insert(new Contact(contactAPIS.get(i).id, contactAPIS.get(i).last));
+                    Contact contact = new Contact(contactAPIS.get(i).id, contactAPIS.get(i).last);
+                    Conversation conversation = new Conversation(userId, contactAPIS.get(i).id, contactAPIS.get(i).last, contactAPIS.get(i).lastDate);
+                    Conversation list = conversationDao.getSpecificConversation(userId, contactAPIS.get(i).id);
+                    if (list == null) {
+                        conversationDao.insert(conversation);
+                        contactDao.insert(contact);
+                    }
                 }
             }
 
@@ -115,13 +117,6 @@ public class ContactApi {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 //user name and password are correct
-                if (response.code() == 200){
-                   isOkDao.insert(new isOk(userId, true));
-                }
-                else {
-                    //incorrect
-                    isOkDao.insert(new isOk(userId, false));
-                }
                 Void check = response.body();
             }
 

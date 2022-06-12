@@ -19,8 +19,11 @@ import java.util.List;
 import talktome.com.Adapters.ListItemAdapter;
 import talktome.com.DB.AppDB;
 import talktome.com.DB.ConversationDB;
+import talktome.com.DB.MessageDB;
 import talktome.com.Dao.ContactDao;
 import talktome.com.Dao.ConversationDao;
+import talktome.com.Dao.MessageDao;
+import talktome.com.api.ContactApi;
 
 public class ContactsChatActivity extends AppCompatActivity {
     private ContactDao contactDao;
@@ -31,6 +34,9 @@ public class ContactsChatActivity extends AppCompatActivity {
     private ConversationDB conversationDB;
     private ConversationDao conversationDao;
     private String userName = null;
+    private AppDB db;
+    private MessageDB messageDB;
+    private MessageDao messageDao;
 
 
     @Override
@@ -43,11 +49,17 @@ public class ContactsChatActivity extends AppCompatActivity {
         if (user_registered != null) {
             this.userName = user_registered.getString("userName");
         }
-        AppDB db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         contactDao = db.contactDao();
 
         conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         conversationDao = conversationDB.conversationDao();
+
+        messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        messageDao = messageDB.messageDao();
+
+        ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao);
+        contactApi.getContactsOfUser(this.userName);
 
         FloatingActionButton addContactButton = findViewById(R.id.addContactButton);
         addContactButton.setOnClickListener(v -> {
@@ -62,6 +74,8 @@ public class ContactsChatActivity extends AppCompatActivity {
         adapterListItem = new ListItemAdapter(getApplicationContext(), Conversations);
         lvContacts.setAdapter(adapterListItem);
         lvContacts.setClickable(true);
+        adapterListItem.notifyDataSetChanged();
+        lvContacts.setVisibility(View.VISIBLE);
 
         TextView tvUserName = findViewById(R.id.chat_user_name_connected);
         tvUserName.setText(this.userName);
