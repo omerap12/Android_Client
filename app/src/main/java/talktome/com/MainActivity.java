@@ -14,8 +14,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import talktome.com.DB.AppDB;
 import talktome.com.DB.ConversationDB;
 import talktome.com.DB.IsOkDB;
@@ -25,6 +31,7 @@ import talktome.com.Dao.ConversationDao;
 import talktome.com.Dao.IsOkDao;
 import talktome.com.Dao.MessageDao;
 import talktome.com.api.ContactApi;
+import talktome.com.api.WebServiceApi;
 
 public class MainActivity extends AppCompatActivity {
     private AppDB db;
@@ -108,18 +115,38 @@ public class MainActivity extends AppCompatActivity {
             String user_password = passwordInput.getText().toString();
             userNameInput.setText("");
             passwordInput.setText("");
-            //check validation of user name & password (need to send to server side)
-            contactApi.checkPassword(user_name, user_password);
-            List<isOk> list = isOkDao.index();
-//            System.out.println("ht");
-//            if (isOkDao.index().get(0).isIsok()==true) {
-//                isOkDao.delete(isOkDao.index().get(0));
-//                Intent i = new Intent(MainActivity.this, ContactsChatActivity.class);
-//                i.putExtra("userName", user_name);
-//                startActivity(i);
-//            }
-//            isOkDao.delete(isOkDao.index().get(0));
-//            //notify if not true
+
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            WebServiceApi webServiceApi = retrofit.create(WebServiceApi.class);
+            Call<Void> call = webServiceApi.checkPassword(user_name,user_password);
+
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    //user name and password are correct
+                    if (response.code() == 200){
+                        Intent i = new Intent(MainActivity.this, ContactsChatActivity.class);
+                        i.putExtra("userName", user_name);
+                        startActivity(i);
+                    }
+                    else {
+                        //incorrect
+                        System.out.println("Wrong user_name / password");
+                    }
+                    Void check = response.body();
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    System.out.printf("here");
+                }
+            });
         });
 
 
