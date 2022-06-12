@@ -17,8 +17,8 @@ import talktome.com.entities.Message;
 import talktome.com.entities.TransferObj;
 
 public class ContactApi {
-    private Retrofit retrofit;
-    private WebServiceApi webServiceApi;
+    private static Retrofit retrofit;
+    private static WebServiceApi webServiceApi;
 
     public ContactApi() {
         Gson gson = new GsonBuilder()
@@ -30,6 +30,7 @@ public class ContactApi {
                 .build();
         webServiceApi = retrofit.create(WebServiceApi.class);
     }
+
     public void getAllContacts(){
         Call<List<Contact>> call = webServiceApi.getContacts();
         call.enqueue(new Callback<List<Contact>>() {

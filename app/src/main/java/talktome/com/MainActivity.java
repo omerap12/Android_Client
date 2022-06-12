@@ -14,7 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import talktome.com.api.ContactApi;
+import talktome.com.entities.Contact;
 import talktome.com.entities.InviteObj;
 
 public class MainActivity extends AppCompatActivity {
