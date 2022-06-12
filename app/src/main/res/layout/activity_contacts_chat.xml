@@ -31,7 +31,6 @@
                 android:id="@+id/chat_user_name_connected"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Avitalos"
                 android:textSize="25dp"
                 android:paddingStart="20dp"
                 android:layout_gravity="center_vertical"

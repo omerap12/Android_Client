@@ -40,7 +40,6 @@ public class RegisterPageActivity extends AppCompatActivity {
         SpannableString ss = new SpannableString(text);
         ClickableSpan clickableSpan1 = new ClickableSpan() {
             public void onClick(View widget) {
-                Toast.makeText(RegisterPageActivity.this, "here", Toast.LENGTH_SHORT).show();
                 Intent a = new Intent(RegisterPageActivity.this, MainActivity.class);
                 startActivity(a);
             }

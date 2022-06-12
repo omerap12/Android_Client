@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import talktome.com.api.ContactApi;
+//import talktome.com.api.ContactApi;
 import talktome.com.entities.Contact;
 import talktome.com.entities.PostContact;
 
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ContactApi contactApi = new ContactApi();
+        //ContactApi contactApi = new ContactApi();
         /**
          * Getting the contacts of specific User
          * contactApi.getContactsOfUser("TSM_Omer");
@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
          */
 
 
-
         // login button handler
         Button btn_login = findViewById(R.id.login_btn);
         btn_login.setOnClickListener(v -> {
@@ -60,10 +59,12 @@ public class MainActivity extends AppCompatActivity {
             String user_name = userNameInput.getText().toString();
             EditText passwordInput = (EditText)findViewById(R.id.editTextTextPassword);
             String user_password = passwordInput.getText().toString();
+            userNameInput.setText("");
+            passwordInput.setText("");
             //check validation of user name & password (need to send to server side)
+
             Intent i = new Intent(MainActivity.this, ContactsChatActivity.class);
             i.putExtra("userName", user_name);
-            i.putExtra("userPassword", user_password);
             startActivity(i);
         });
 
@@ -74,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         SpannableString ss = new SpannableString(text);
         ClickableSpan clickableSpan1 = new ClickableSpan() {
             public void onClick(View widget) {
-                Toast.makeText(MainActivity.this, "here", Toast.LENGTH_SHORT).show();
                 Intent a = new Intent(MainActivity.this, RegisterPageActivity.class);
                 startActivity(a);
             }

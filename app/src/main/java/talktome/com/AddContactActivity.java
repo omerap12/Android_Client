@@ -13,7 +13,7 @@ import talktome.com.DB.MessageDB;
 import talktome.com.Dao.ContactDao;
 import talktome.com.Dao.ConversationDao;
 import talktome.com.Dao.MessageDao;
-import talktome.com.api.ContactApi;
+//import talktome.com.api.ContactApi;
 
 public class AddContactActivity extends AppCompatActivity {
     private AppDB db;
@@ -22,13 +22,12 @@ public class AddContactActivity extends AppCompatActivity {
     private ConversationDao conversationDao;
     private MessageDB messageDB;
     private MessageDao messageDao;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
-
-        //example
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         contactDao = db.contactDao();
@@ -37,22 +36,27 @@ public class AddContactActivity extends AppCompatActivity {
         messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         messageDao = messageDB.messageDao();
 
+        Bundle user_registered = getIntent().getExtras();
+        if (user_registered != null) {
+            this.userName = user_registered.getString("userName");
+        }
+
 
         Button addContactButton = findViewById(R.id.addContactButton);
         addContactButton.setOnClickListener( v -> {
             EditText etUserName = findViewById(R.id.userName_AddContact);
-            String userName = etUserName.getText().toString();
+            String userNameOther = etUserName.getText().toString();
 
             EditText etNickName = findViewById(R.id.nickName_AddContact);
-            String nickName = etNickName.getText().toString();
+            String nickNameOther = etNickName.getText().toString();
 
             EditText etServerName = findViewById(R.id.server_AddContact);
-            String serverName = etServerName.getText().toString();
+            String serverNameOther = etServerName.getText().toString();
 
             //need to validate the new contact before adding to list
-            Contact newContact = new Contact( userName, nickName, "", serverName);
+            Contact newContact = new Contact( userNameOther, nickNameOther, "", serverNameOther);
             contactDao.insert(newContact);
-            conversationDao.insert(new Conversation("test",userName));
+            conversationDao.insert(new Conversation(this.userName,userNameOther));
             finish();
         });
     }
