@@ -33,6 +33,9 @@ public interface WebServiceApi {
     @POST("{userId}/Contacts")
     Call <Void> addContactToUser(@Path("userId") String userId,@Query("id") String id, @Query("name") String name, @Query("server") String server);
 
+    @POST("{userId}/Contacts/{id}/Messages")
+    Call <Void> sendMessageFromUserIdToId(@Path("userId") String userId, @Path("id") String id, @Query("content") String content);
+
 
 
 

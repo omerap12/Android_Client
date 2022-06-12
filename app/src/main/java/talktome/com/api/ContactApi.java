@@ -9,6 +9,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import talktome.com.MyApplication;
 import talktome.com.R;
 import talktome.com.entities.Contact;
@@ -103,6 +105,20 @@ public class ContactApi {
     }
     public void addContactToUser(String userId, String id, String name, String server){
         Call<Void> call = webServiceApi.addContactToUser(userId,id,name,server);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
+    public void sendMessageFromUserIdToId(String userId, String id,String content){
+        Call<Void> call = webServiceApi.sendMessageFromUserIdToId(userId,id,content);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call <Void> call, Response<Void> response) {

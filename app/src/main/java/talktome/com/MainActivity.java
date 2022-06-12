@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
          * contactApi.addContactToUser("TSM_Omer","Test2","testtest","localhost:7030");
          */
 
+        /**
+         * Send message from A to B
+         *  contactApi.sendMessageFromUserIdToId("TSM_Omer","Avitalos","Test");
+         */
+
 
 
         // login button handler
