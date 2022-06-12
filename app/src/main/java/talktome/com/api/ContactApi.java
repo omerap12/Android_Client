@@ -138,6 +138,13 @@ public class ContactApi {
             @Override
             public void onResponse(Call <Void> call, Response<Void> response) {
                 Void check = response.body();
+                if (contactDao.get(userId)==null) {
+                    contactDao.insert(new Contact(userId, ""));
+                }
+                if (contactDao.get(id)==null) {
+                    contactDao.insert(new Contact(id, ""));
+                    conversationDao.insert(new Conversation(userId, id, "", ""));
+                }
             }
 
             @Override
@@ -152,6 +159,7 @@ public class ContactApi {
             @Override
             public void onResponse(Call <Void> call, Response<Void> response) {
                 Void check = response.body();
+                messageDao.insert(new Message(userId, id, content, ""));
             }
 
             @Override
@@ -166,6 +174,7 @@ public class ContactApi {
             @Override
             public void onResponse(Call <Void> call, Response<Void> response) {
                 Void check = response.body();
+                contactDao.insert(new Contact(user_id, ""));
             }
 
             @Override
@@ -180,6 +189,7 @@ public class ContactApi {
             @Override
             public void onResponse(Call <Void> call, Response<Void> response) {
                 Void check = response.body();
+                messageDao.insert(new Message(transferObj.getFrom(), transferObj.getTo(), transferObj.getContent(), ""));
             }
 
             @Override
@@ -194,6 +204,8 @@ public class ContactApi {
             @Override
             public void onResponse(Call <Void> call, Response<Void> response) {
                 Void check = response.body();
+                contactDao.insert(new Contact(inviteObj.getTo(), ""));
+                conversationDao.insert(new Conversation(inviteObj.getFrom(), inviteObj.getTo(), "", ""));
             }
 
             @Override
@@ -202,8 +214,5 @@ public class ContactApi {
             }
         });
     }
-
-
-
 
 }
