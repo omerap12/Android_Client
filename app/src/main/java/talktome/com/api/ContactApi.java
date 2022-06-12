@@ -27,6 +27,7 @@ public class ContactApi {
     private ContactDao contactDao;
     private MessageDao messageDao;
     private ConversationDao conversationDao;
+    public boolean isOk;
 
     public ContactApi(MessageDao messageDao1, ContactDao contactDao1, ConversationDao conversationDao1) {
         Gson gson = new GsonBuilder()
@@ -109,7 +110,16 @@ public class ContactApi {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                //user name and password are correct
+                if (response.code() == 200){
+                   isOk = true;
+                }
+                else {
+                    //incorrect
+                    isOk = false;
+                }
                 Void check = response.body();
+
             }
 
             @Override
