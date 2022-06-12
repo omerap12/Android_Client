@@ -1,6 +1,7 @@
 package talktome.com;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,21 +13,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.List;
-
 import talktome.com.api.ContactApi;
 import talktome.com.entities.Contact;
+import talktome.com.api.ContactApi;
+import talktome.com.DB.AppDB;
+import talktome.com.Dao.ContactDao;
+import talktome.com.entities.PostContact;
 import talktome.com.entities.InviteObj;
 
 public class MainActivity extends AppCompatActivity {
-
+    private AppDB db;
+    private ContactDao contactDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ContactApi contactApi = new ContactApi();
+
+        db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        contactDao = db.contactDao();
+
         /**
          * Getting the contacts of specific User
          * contactApi.getContactsOfUser("TSM_Omer");
@@ -75,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         // login button handler
         Button btn_login = findViewById(R.id.login_btn);
         btn_login.setOnClickListener(v -> {
@@ -83,10 +89,12 @@ public class MainActivity extends AppCompatActivity {
             String user_name = userNameInput.getText().toString();
             EditText passwordInput = (EditText)findViewById(R.id.editTextTextPassword);
             String user_password = passwordInput.getText().toString();
+            userNameInput.setText("");
+            passwordInput.setText("");
             //check validation of user name & password (need to send to server side)
+
             Intent i = new Intent(MainActivity.this, ContactsChatActivity.class);
             i.putExtra("userName", user_name);
-            i.putExtra("userPassword", user_password);
             startActivity(i);
         });
 
@@ -97,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         SpannableString ss = new SpannableString(text);
         ClickableSpan clickableSpan1 = new ClickableSpan() {
             public void onClick(View widget) {
-                Toast.makeText(MainActivity.this, "here", Toast.LENGTH_SHORT).show();
                 Intent a = new Intent(MainActivity.this, RegisterPageActivity.class);
                 startActivity(a);
             }

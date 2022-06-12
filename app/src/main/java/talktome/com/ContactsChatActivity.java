@@ -1,13 +1,15 @@
 package talktome.com;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -28,6 +30,7 @@ public class ContactsChatActivity extends AppCompatActivity {
     private ListView lvContacts;
     private ConversationDB conversationDB;
     private ConversationDao conversationDao;
+    private String userName = null;
 
 
     @Override
@@ -35,6 +38,11 @@ public class ContactsChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_chat);
 
+        //get the user name that is registered
+        Bundle user_registered = getIntent().getExtras();
+        if (user_registered != null) {
+            this.userName = user_registered.getString("userName");
+        }
         AppDB db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         contactDao = db.contactDao();
 
@@ -44,6 +52,7 @@ public class ContactsChatActivity extends AppCompatActivity {
         FloatingActionButton addContactButton = findViewById(R.id.addContactButton);
         addContactButton.setOnClickListener(v -> {
             Intent i = new Intent(this, AddContactActivity.class);
+            i.putExtra("userName", userName);
             startActivity(i);
         });
 
@@ -54,11 +63,24 @@ public class ContactsChatActivity extends AppCompatActivity {
         lvContacts.setAdapter(adapterListItem);
         lvContacts.setClickable(true);
 
+        TextView tvUserName = findViewById(R.id.chat_user_name_connected);
+        tvUserName.setText(this.userName);
+
+        //clicking on one of the contacts in the list of contacts
         lvContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), ChatMessagesActivity.class);
-                startActivity(intent);
+                onResume();
+                if (!Conversations.isEmpty()) {
+                    Conversation conversation = Conversations.get(position);
+                    if (conversation.from.equals(userName)) {
+                        Intent intent = new Intent(getApplicationContext(), ChatMessagesActivity.class);
+                        //need to complete that
+                        intent.putExtra("userName", userName);
+                        intent.putExtra("contactName", conversation.to);
+                        startActivity(intent);
+                    }
+                }
             }
         });
 
@@ -74,11 +96,15 @@ public class ContactsChatActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onResume() {
         super.onResume();
         Conversations.clear();
         Conversations.addAll(conversationDao.index());
+        Contacts.clear();
+        Contacts.addAll(contactDao.index());
         adapterListItem.notifyDataSetChanged();
+        lvContacts.setVisibility(View.VISIBLE);
     }
 }
