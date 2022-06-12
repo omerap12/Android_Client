@@ -37,6 +37,7 @@ public class ContactsChatActivity extends AppCompatActivity {
     private AppDB db;
     private MessageDB messageDB;
     private MessageDao messageDao;
+    private ContactApi contactApi;
 
 
     @Override
@@ -58,8 +59,7 @@ public class ContactsChatActivity extends AppCompatActivity {
         messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         messageDao = messageDB.messageDao();
 
-        ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao);
-        contactApi.getContactsOfUser(this.userName);
+        contactApi = new ContactApi(messageDao, contactDao, conversationDao);
 
         FloatingActionButton addContactButton = findViewById(R.id.addContactButton);
         addContactButton.setOnClickListener(v -> {
@@ -67,6 +67,7 @@ public class ContactsChatActivity extends AppCompatActivity {
             i.putExtra("userName", userName);
             startActivity(i);
         });
+        contactApi.getContactsOfUser(this.userName);
 
         Conversations = conversationDao.index();
         Contacts = contactDao.index();
@@ -74,11 +75,11 @@ public class ContactsChatActivity extends AppCompatActivity {
         adapterListItem = new ListItemAdapter(getApplicationContext(), Conversations);
         lvContacts.setAdapter(adapterListItem);
         lvContacts.setClickable(true);
-        adapterListItem.notifyDataSetChanged();
-        lvContacts.setVisibility(View.VISIBLE);
 
         TextView tvUserName = findViewById(R.id.chat_user_name_connected);
         tvUserName.setText(this.userName);
+        contactApi.getContactsOfUser(this.userName);
+        onResume();
 
         //clicking on one of the contacts in the list of contacts
         lvContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -114,6 +115,7 @@ public class ContactsChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        contactApi.getContactsOfUser(this.userName);
         Conversations.clear();
         Conversations.addAll(conversationDao.index());
         Contacts.clear();

@@ -24,7 +24,6 @@ import talktome.com.DB.MessageDB;
 import talktome.com.Dao.ContactDao;
 import talktome.com.Dao.ConversationDao;
 import talktome.com.Dao.MessageDao;
-import talktome.com.api.ContactApi;
 
 public class ChatMessagesActivity extends AppCompatActivity {
     private RecyclerView MessageRecycler;
@@ -59,8 +58,6 @@ public class ChatMessagesActivity extends AppCompatActivity {
         messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         messageDao = messageDB.messageDao();
 
-        ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao);
-        contactApi.getContactsOfUser(this.userName);
 
         listOfMessages = messageDao.getMessagesBetweenUsers(this.userName, this.contactName);
         MessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
