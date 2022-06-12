@@ -39,6 +39,8 @@ public interface WebServiceApi {
     @POST("Contacts/{user_id}/{nick_name}/{password}/{server}")
     Call <Void> AddNewUserToApp(@Path("user_id") String user_id, @Path("nick_name") String nick_name, @Path("password") String password, @Path("server") String server);
 
+    @POST("Transfer")
+    Call <Void> Transfer(@Body TransferObj transferObj);
 
 
 

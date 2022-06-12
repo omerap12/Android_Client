@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import talktome.com.api.ContactApi;
+import talktome.com.api.TransferObj;
 import talktome.com.entities.Contact;
 import talktome.com.entities.PostContact;
 
@@ -60,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
          * Create a new user in the app db
          * contactApi.AddNewUserToApp("Nivnah","Niv","1111","gitchatp");
          */
+
+        /**
+         * Transfer
+         *  contactApi.Transfer(new TransferObj("from","to","content"));
+         */
+
 
 
 

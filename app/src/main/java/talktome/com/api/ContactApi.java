@@ -145,6 +145,20 @@ public class ContactApi {
             }
         });
     }
+    public void Transfer(TransferObj transferObj){
+        Call<Void> call = webServiceApi.Transfer(transferObj);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
 
 
 
