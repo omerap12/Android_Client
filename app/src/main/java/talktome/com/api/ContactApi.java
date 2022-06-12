@@ -1,5 +1,8 @@
 package talktome.com.api;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,9 +20,12 @@ public class ContactApi {
     private WebServiceApi webServiceApi;
 
     public ContactApi() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.context.getString(R.string.BaseUrl))
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         webServiceApi = retrofit.create(WebServiceApi.class);
     }
@@ -81,15 +87,15 @@ public class ContactApi {
         });
     }
     public void getUserServerName(String userId){
-        Call<List<ServerName>> call = webServiceApi.getUserServerName(userId);
-        call.enqueue(new Callback<List<ServerName>>() {
+        Call<String> call = webServiceApi.getUserServerName(userId);
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<List<ServerName>> call, Response<List<ServerName>> response) {
-                List<ServerName> serveName = response.body();
+            public void onResponse(Call <String> call, Response<String> response) {
+                String serveName = response.body();
             }
 
             @Override
-            public void onFailure(Call<List<ServerName>> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 System.out.printf("here");
             }
         });

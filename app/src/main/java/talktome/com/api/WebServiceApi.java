@@ -24,7 +24,7 @@ public interface WebServiceApi {
     Call <Void> checkPassword(@Path("userId") String userId, @Path("password") String password);
 
     @GET("Contacts/servername/{userId}")
-    Call <List<ServerName>> getUserServerName(@Path("userId") String userId);
+    Call <String> getUserServerName(@Path("userId") String userId);
 
 
 
