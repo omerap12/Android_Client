@@ -13,26 +13,36 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import java.util.List;
-import talktome.com.api.ContactApi;
-import talktome.com.entities.Contact;
+
+import talktome.com.DB.ConversationDB;
+import talktome.com.DB.MessageDB;
+import talktome.com.Dao.ConversationDao;
+import talktome.com.Dao.MessageDao;
 import talktome.com.api.ContactApi;
 import talktome.com.DB.AppDB;
 import talktome.com.Dao.ContactDao;
-import talktome.com.entities.PostContact;
-import talktome.com.entities.InviteObj;
 
 public class MainActivity extends AppCompatActivity {
     private AppDB db;
+    private MessageDB messageDB;
+    private ConversationDB conversationDB;
     private ContactDao contactDao;
+    private MessageDao messageDao;
+    private ConversationDao conversationDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ContactApi contactApi = new ContactApi();
-
+        //all room data bases
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         contactDao = db.contactDao();
+        messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        messageDao = messageDB.messageDao();
+        conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+        conversationDao = conversationDB.conversationDao();
+
+        ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao);
+        contactApi.getContactsOfUser("TSM_Omer");
 
         /**
          * Getting the contacts of specific User

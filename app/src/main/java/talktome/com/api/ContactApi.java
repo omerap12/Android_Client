@@ -1,4 +1,6 @@
 package talktome.com.api;
+import androidx.room.Room;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.List;
@@ -7,9 +9,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import talktome.com.Contact;
+import talktome.com.Conversation;
+import talktome.com.DB.AppDB;
+import talktome.com.DB.ConversationDB;
+import talktome.com.DB.MessageDB;
+import talktome.com.Dao.ContactDao;
+import talktome.com.Dao.ConversationDao;
+import talktome.com.Dao.MessageDao;
 import talktome.com.MyApplication;
 import talktome.com.R;
-import talktome.com.entities.Contact;
+import talktome.com.entities.ContactAPI;
 import talktome.com.entities.InviteObj;
 import talktome.com.entities.Message;
 import talktome.com.entities.TransferObj;
@@ -17,8 +27,11 @@ import talktome.com.entities.TransferObj;
 public class ContactApi {
     private static Retrofit retrofit;
     private static WebServiceApi webServiceApi;
+    private ContactDao contactDao;
+    private MessageDao messageDao;
+    private ConversationDao conversationDao;
 
-    public ContactApi() {
+    public ContactApi(MessageDao messageDao1, ContactDao contactDao1, ConversationDao conversationDao1) {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -27,33 +40,40 @@ public class ContactApi {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         webServiceApi = retrofit.create(WebServiceApi.class);
+        contactDao = contactDao1;
+        messageDao = messageDao1;
+        conversationDao = conversationDao1;
     }
 
     public void getAllContacts(){
-        Call<List<Contact>> call = webServiceApi.getContacts();
-        call.enqueue(new Callback<List<Contact>>() {
+        Call<List<ContactAPI>> call = webServiceApi.getContacts();
+        call.enqueue(new Callback<List<ContactAPI>>() {
             @Override
-            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                List<Contact> contacts = response.body();
+            public void onResponse(Call<List<ContactAPI>> call, Response<List<ContactAPI>> response) {
+                List<ContactAPI> contactAPIS = response.body();
             }
 
             @Override
-            public void onFailure(Call<List<Contact>> call, Throwable t) {
+            public void onFailure(Call<List<ContactAPI>> call, Throwable t) {
                 System.out.printf("here");
             }
         });
     }
 
     public void getContactsOfUser(String userId){
-        Call<List<Contact>> call = webServiceApi.getContactsOfUser(userId);
-        call.enqueue(new Callback<List<Contact>>() {
+        Call<List<ContactAPI>> call = webServiceApi.getContactsOfUser(userId);
+        call.enqueue(new Callback<List<ContactAPI>>() {
             @Override
-            public void onResponse(Call<List<Contact>> call, Response<List<Contact>> response) {
-                List<Contact> contacts = response.body();
+            public void onResponse(Call<List<ContactAPI>> call, Response<List<ContactAPI>> response) {
+                List<ContactAPI> contactAPIS = response.body();
+                for (int i=0; i < contactAPIS.size(); i++) {
+                    conversationDao.insert(new Conversation(userId, contactAPIS.get(i).id, contactAPIS.get(i).last, contactAPIS.get(i).lastDate));
+                    contactDao.insert(new Contact(contactAPIS.get(i).id, contactAPIS.get(i).last));
+                }
             }
 
             @Override
-            public void onFailure(Call<List<Contact>> call, Throwable t) {
+            public void onFailure(Call<List<ContactAPI>> call, Throwable t) {
                 System.out.printf("here");
             }
         });

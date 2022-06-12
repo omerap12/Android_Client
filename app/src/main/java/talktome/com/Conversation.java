@@ -12,9 +12,11 @@ public class Conversation {
     public String last;
     public String lastdate;
 
-    public Conversation(String from, String to) {
+    public Conversation(String from, String to, String last, String lastdate) {
         this.from = from;
         this.to = to;
+        this.last = last;
+        this.lastdate = lastdate;
     }
 
     public String getFrom() {

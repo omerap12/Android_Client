@@ -96,7 +96,7 @@ public class RegisterPageActivity extends AppCompatActivity {
                 alert11.show();
             }
             else {
-                contactDao.insert(new Contact(user_name, nick_name, "", "server"));
+                contactDao.insert(new Contact(user_name, ""));
                 //if validation is ok - go to the sign in page
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(RegisterPageActivity.this);
                 builder1.setMessage("Go to sign in page");

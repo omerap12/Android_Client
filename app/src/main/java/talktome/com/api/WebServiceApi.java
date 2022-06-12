@@ -7,7 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import talktome.com.entities.Contact;
+import talktome.com.entities.ContactAPI;
 import talktome.com.entities.InviteObj;
 import talktome.com.entities.Message;
 import talktome.com.entities.TransferObj;
@@ -15,10 +15,10 @@ import talktome.com.entities.TransferObj;
 public interface WebServiceApi {
 
     @GET("Contacts")
-    Call <List<Contact>> getContacts();
+    Call <List<ContactAPI>> getContacts();
 
     @GET("{userId}/Contacts")
-    Call <List<Contact>> getContactsOfUser(@Path("userId") String userId);
+    Call <List<ContactAPI>> getContactsOfUser(@Path("userId") String userId);
 
     @GET("{userId}/Contacts/{otherId}/Messages")
     Call <List<Message>> getMessagesBetweenUsers(@Path("userId") String userId, @Path("otherId") String otherId);

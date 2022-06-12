@@ -47,9 +47,9 @@ public class AddContactActivity extends AppCompatActivity {
             String serverNameOther = etServerName.getText().toString();
 
             //need to validate the new contact before adding to list
-            Contact newContact = new Contact( userNameOther, nickNameOther, "", serverNameOther);
+            Contact newContact = new Contact( userNameOther, "");
             contactDao.insert(newContact);
-            conversationDao.insert(new Conversation(this.userName,userNameOther));
+            conversationDao.insert(new Conversation(this.userName,userNameOther, "", ""));
             finish();
         });
     }
