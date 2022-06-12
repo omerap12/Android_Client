@@ -56,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
          *  contactApi.sendMessageFromUserIdToId("TSM_Omer","Avitalos","Test");
          */
 
+        /**
+         * Create a new user in the app db
+         * contactApi.AddNewUserToApp("Nivnah","Niv","1111","gitchatp");
+         */
+
+
 
 
         // login button handler

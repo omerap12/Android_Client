@@ -131,6 +131,20 @@ public class ContactApi {
             }
         });
     }
+    public void AddNewUserToApp(String user_id,String nick_name,String password,String server){
+        Call<Void> call = webServiceApi.AddNewUserToApp(user_id,nick_name,password,server);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
 
 
 
