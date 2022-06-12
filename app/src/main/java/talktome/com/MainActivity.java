@@ -1,6 +1,5 @@
 package talktome.com;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
@@ -19,6 +18,7 @@ import talktome.com.api.ContactApi;
 import talktome.com.DB.AppDB;
 import talktome.com.Dao.ContactDao;
 import talktome.com.entities.PostContact;
+import talktome.com.entities.InviteObj;
 
 public class MainActivity extends AppCompatActivity {
     private AppDB db;
@@ -56,6 +56,28 @@ public class MainActivity extends AppCompatActivity {
          * are the added user data
          * contactApi.addContactToUser("TSM_Omer","Test2","testtest","localhost:7030");
          */
+
+        /**
+         * Send message from A to B
+         *  contactApi.sendMessageFromUserIdToId("TSM_Omer","Avitalos","Test");
+         */
+
+        /**
+         * Create a new user in the app db
+         * contactApi.AddNewUserToApp("Nivnah","Niv","1111","gitchatp");
+         */
+
+        /**
+         * Transfer
+         * contactApi.Transfer(new TransferObj("from","to","content"));
+         */
+
+        /**
+         * Invite
+         * contactApi.Invite(new InviteObj("TSM_Omer","KIM","USA"));
+         */
+
+
 
 
         // login button handler

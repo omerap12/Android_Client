@@ -14,9 +14,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import talktome.com.MyApplication;
 import talktome.com.R;
 import talktome.com.entities.Contact;
+import talktome.com.entities.InviteObj;
 import talktome.com.entities.Message;
-import talktome.com.entities.PostContact;
-import talktome.com.entities.ServerName;
+import talktome.com.entities.TransferObj;
 
 public class ContactApi {
     private Retrofit retrofit;
@@ -105,6 +105,62 @@ public class ContactApi {
     }
     public void addContactToUser(String userId, String id, String name, String server){
         Call<Void> call = webServiceApi.addContactToUser(userId,id,name,server);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
+    public void sendMessageFromUserIdToId(String userId, String id,String content){
+        Call<Void> call = webServiceApi.sendMessageFromUserIdToId(userId,id,content);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
+    public void AddNewUserToApp(String user_id,String nick_name,String password,String server){
+        Call<Void> call = webServiceApi.AddNewUserToApp(user_id,nick_name,password,server);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
+    public void Transfer(TransferObj transferObj){
+        Call<Void> call = webServiceApi.Transfer(transferObj);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
+    public void Invite(InviteObj inviteObj){
+        Call<Void> call = webServiceApi.Invite(inviteObj);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call <Void> call, Response<Void> response) {

@@ -11,9 +11,9 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import talktome.com.entities.Contact;
+import talktome.com.entities.InviteObj;
 import talktome.com.entities.Message;
-import talktome.com.entities.PostContact;
-import talktome.com.entities.ServerName;
+import talktome.com.entities.TransferObj;
 
 public interface WebServiceApi {
 
@@ -33,7 +33,21 @@ public interface WebServiceApi {
     Call <String> getUserServerName(@Path("userId") String userId);
 
     @POST("{userId}/Contacts")
-    Call<Void> addContactToUser(@Path("userId") String userId, @Query("id") String id, @Query("name") String name, @Query("server") String server);
+    Call <Void> addContactToUser(@Path("userId") String userId,@Query("id") String id, @Query("name") String name, @Query("server") String server);
+
+    @POST("{userId}/Contacts/{id}/Messages")
+    Call <Void> sendMessageFromUserIdToId(@Path("userId") String userId, @Path("id") String id, @Query("content") String content);
+
+    @POST("Contacts/{user_id}/{nick_name}/{password}/{server}")
+    Call <Void> AddNewUserToApp(@Path("user_id") String user_id, @Path("nick_name") String nick_name, @Path("password") String password, @Path("server") String server);
+
+    @POST("Transfer")
+    Call <Void> Transfer(@Body TransferObj transferObj);
+
+    @POST("invitations")
+    Call <Void> Invite (@Body InviteObj inviteObj);
+
+>>>>>>> 8a256ba09374c1dd03d0ac57178b186f153276a7
 
 
 }
