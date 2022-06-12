@@ -13,6 +13,7 @@ import talktome.com.MyApplication;
 import talktome.com.R;
 import talktome.com.entities.Contact;
 import talktome.com.entities.Message;
+import talktome.com.entities.PostContact;
 import talktome.com.entities.ServerName;
 
 public class ContactApi {
@@ -100,4 +101,22 @@ public class ContactApi {
             }
         });
     }
+    public void addContactToUser(String userId, String id, String name, String server){
+        Call<Void> call = webServiceApi.addContactToUser(userId,id,name,server);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
+
+
+
+
 }

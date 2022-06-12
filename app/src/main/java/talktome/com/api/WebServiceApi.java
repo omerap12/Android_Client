@@ -3,10 +3,14 @@ package talktome.com.api;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import talktome.com.entities.Contact;
 import talktome.com.entities.Message;
+import talktome.com.entities.PostContact;
 import talktome.com.entities.ServerName;
 
 public interface WebServiceApi {
@@ -26,6 +30,8 @@ public interface WebServiceApi {
     @GET("Contacts/servername/{userId}")
     Call <String> getUserServerName(@Path("userId") String userId);
 
+    @POST("{userId}/Contacts")
+    Call <Void> addContactToUser(@Path("userId") String userId,@Query("id") String id, @Query("name") String name, @Query("server") String server);
 
 
 
