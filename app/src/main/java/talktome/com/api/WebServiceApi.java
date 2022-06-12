@@ -47,7 +47,5 @@ public interface WebServiceApi {
     @POST("invitations")
     Call <Void> Invite (@Body InviteObj inviteObj);
 
->>>>>>> 8a256ba09374c1dd03d0ac57178b186f153276a7
-
 
 }
