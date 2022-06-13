@@ -4,41 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_bk"
     tools:context=".AddContactActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="45dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="15dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="27dp"
+            android:textStyle="bold"
+            android:textColor="@color/greyAvitalLight"
+            android:text="Add New Contact">
+        </TextView>
+
         <EditText
             android:id="@+id/userName_AddContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:hint="User name"
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
         <EditText
             android:id="@+id/nickName_AddContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:hint="Nick name"
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
         <EditText
             android:id="@+id/server_AddContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="8dp"
             android:hint="Server"
             tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/addContactButton"
+            style="@style/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_marginTop="11dp"
             android:text="Add" />
 
     </LinearLayout>
