@@ -73,6 +73,7 @@ public class ContactsChatActivity extends AppCompatActivity {
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ContactsChatActivity.this, instanceIdResult -> {
             newToken = instanceIdResult.getToken();
+            //gey
         });
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
