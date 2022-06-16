@@ -38,10 +38,10 @@ public interface WebServiceApi {
     @POST("Contacts/{user_id}/{nick_name}/{password}/{server}")
     Call <Void> AddNewUserToApp(@Path("user_id") String user_id, @Path("nick_name") String nick_name, @Path("password") String password, @Path("server") String server);
 
-    @POST("api/{user_id}/{token}")
+    @POST("{user_id}/{token}")
     Call <Void> SendTokenToServer(@Path("user_id") String user_id,@Path("token") String token);
 
-    @GET("api/token/{user_id}")
+    @GET("token/{user_id}")
     Call <Void> GetTokenFronServer(@Path("user_id") String user_id);
 
     @POST("Transfer")
