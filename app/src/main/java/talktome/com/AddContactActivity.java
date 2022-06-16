@@ -1,5 +1,7 @@
 package talktome.com;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,10 +48,28 @@ public class AddContactActivity extends AppCompatActivity {
             EditText etServerName = findViewById(R.id.server_AddContact);
             String serverNameOther = etServerName.getText().toString();
 
-            //need to validate the new contact before adding to list
+            //TODO - need to validate the new contact before adding to list
             Contact newContact = new Contact( userNameOther, "");
-            contactDao.insert(newContact);
-            conversationDao.insert(new Conversation(this.userName,userNameOther, "", ""));
+            if (contactDao.get(userNameOther)==null) {
+                contactDao.insert(newContact);
+                conversationDao.insert(new Conversation(this.userName,userNameOther, "", ""));
+            } else {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(AddContactActivity.this);
+                builder1.setMessage("User already exists");
+                builder1.setCancelable(true);
+                builder1.setPositiveButton(
+                        "return",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                etUserName.setText("");
+                                etNickName.setText("");
+                                etServerName.setText("");
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            }
             finish();
         });
     }

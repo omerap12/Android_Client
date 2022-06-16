@@ -90,7 +90,6 @@ public class ContactsChatActivity extends AppCompatActivity {
                     Conversation conversation = Conversations.get(position);
                     if (conversation.from.equals(userName)) {
                         Intent intent = new Intent(getApplicationContext(), ChatMessagesActivity.class);
-                        //need to complete that
                         intent.putExtra("userName", userName);
                         intent.putExtra("contactName", conversation.to);
                         startActivity(intent);

@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase;
 import talktome.com.Dao.IsOkDao;
 import talktome.com.isOk;
 
-@Database(entities = {isOk.class}, version = 6)
+@Database(entities = {isOk.class}, version = 8)
 public abstract class IsOkDB  extends RoomDatabase {
     public abstract IsOkDao isOkDao();
 }
