@@ -70,7 +70,6 @@ public class AddContactActivity extends AppCompatActivity {
                 AlertDialog alert11 = builder1.create();
                 alert11.show();
             }
-            finish();
         });
     }
 
