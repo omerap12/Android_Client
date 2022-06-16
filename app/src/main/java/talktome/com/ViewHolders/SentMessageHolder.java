@@ -1,7 +1,10 @@
-package talktome.com;
+package talktome.com.ViewHolders;
 import android.view.View;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import talktome.com.Message;
+import talktome.com.R;
 
 public class SentMessageHolder extends RecyclerView.ViewHolder{
     TextView messageText, timeText;

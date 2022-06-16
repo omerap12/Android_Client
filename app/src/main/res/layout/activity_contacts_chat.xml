@@ -40,13 +40,13 @@
 
         </LinearLayout>
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/contacts_list"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             tools:listitem="@layout/contact_list_item"
             tools:ignore="MissingConstraints">
-        </ListView>
+        </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

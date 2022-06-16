@@ -3,17 +3,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
-import talktome.com.ChatMessagesActivity;
 import talktome.com.Message;
 import talktome.com.R;
-import talktome.com.ReceivedMessageHolder;
-import talktome.com.SentMessageHolder;
+import talktome.com.ViewHolders.ReceivedMessageHolder;
+import talktome.com.ViewHolders.SentMessageHolder;
 
 public class ListMessagesAdapter extends RecyclerView.Adapter {
 
