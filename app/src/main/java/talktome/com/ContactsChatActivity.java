@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class ContactsChatActivity extends AppCompatActivity {
     private MessageDB messageDB;
     private MessageDao messageDao;
     private ContactApi contactApi;
-
+    private String newToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,9 @@ public class ContactsChatActivity extends AppCompatActivity {
         if (user_registered != null) {
             this.userName = user_registered.getString("userName");
         }
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ContactsChatActivity.this, instanceIdResult -> {
+            newToken = instanceIdResult.getToken();
+        });
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         contactDao = db.contactDao();
 
@@ -57,8 +61,12 @@ public class ContactsChatActivity extends AppCompatActivity {
 
         messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         messageDao = messageDB.messageDao();
+        contactDao.removeAll();
+        conversationDao.removeAll();
 
         contactApi = new ContactApi(messageDao, contactDao, conversationDao);
+        contactApi.SendTokenToServer(this.userName,newToken);
+
         contactApi.getContactsOfUser(this.userName);
 
         FloatingActionButton addContactButton = findViewById(R.id.addContactButton);
