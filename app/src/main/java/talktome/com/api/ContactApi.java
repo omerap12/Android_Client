@@ -236,5 +236,19 @@ public class ContactApi {
             }
         });
     }
+    public void GetTokenFronServer(String user_id){
+        Call<Void> call = webServiceApi.GetTokenFronServer(user_id);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void token = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
 
 }
