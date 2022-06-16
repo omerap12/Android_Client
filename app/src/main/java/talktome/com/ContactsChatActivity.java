@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -47,7 +48,7 @@ public class ContactsChatActivity extends AppCompatActivity {
     private MessageDao messageDao;
     private ContactApi contactApi;
     private ContactsListAdapter contactsListAdapter;
-
+    private String newToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,11 @@ public class ContactsChatActivity extends AppCompatActivity {
         TextView tvUserName = findViewById(R.id.chat_user_name_connected);
         tvUserName.setText(this.userName);
 
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ContactsChatActivity.this, instanceIdResult -> {
+            newToken = instanceIdResult.getToken();
+        });
+
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         contactDao = db.contactDao();
 
@@ -77,12 +83,19 @@ public class ContactsChatActivity extends AppCompatActivity {
 
         messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         messageDao = messageDB.messageDao();
+        contactDao.removeAll();
+        conversationDao.removeAll();
 
         contactApi = new ContactApi(messageDao, contactDao, conversationDao);
         contactsListAdapter = new ContactsListAdapter(this);
         lvContacts = findViewById(R.id.contacts_list);
         lvContacts.setLayoutManager(new LinearLayoutManager(this));
         lvContacts.setHasFixedSize(true);
+
+        contactApi.SendTokenToServer(this.userName,newToken);
+
+        //contactApi.getContactsOfUser(this.userName);
+
         Conversations = conversationDao.index();
         Contacts = contactDao.index();
         lvContacts = findViewById(R.id.contacts_list);
@@ -96,10 +109,6 @@ public class ContactsChatActivity extends AppCompatActivity {
 
 //        contactsListAdapter.setContactsList(Contacts);
 //        contactsListAdapter.setConversationsList(Conversations);
-
-        //contactApi.getContactsOfUser(this.userName);
-
-        //clicking on one of the contacts in the list of contacts
 
     }
 

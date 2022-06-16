@@ -27,7 +27,12 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import talktome.com.DB.AppDB;
+import talktome.com.DB.ConversationDB;
+import talktome.com.DB.MessageDB;
 import talktome.com.Dao.ContactDao;
+import talktome.com.Dao.ConversationDao;
+import talktome.com.Dao.MessageDao;
+import talktome.com.api.ContactApi;
 
 
 public class RegisterPageActivity extends AppCompatActivity {
@@ -97,6 +102,20 @@ public class RegisterPageActivity extends AppCompatActivity {
             }
             else {
                 contactDao.insert(new Contact(user_name, ""));
+                /**
+                 * sending post to server
+                 */
+                db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+                contactDao = db.contactDao();
+                ConversationDB conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+                ConversationDao conversationDao = conversationDB.conversationDao();
+                MessageDB messageDB = Room.databaseBuilder(getApplicationContext(), MessageDB.class, "MessageDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
+                MessageDao messageDao = messageDB.messageDao();
+                ContactApi contactApi = new ContactApi(messageDao,contactDao,conversationDao);
+                contactApi.AddNewUserToApp(user_name,nick_name,password1,"localhost:7030");
+                contactDao.removeAll();
+                conversationDao.removeAll();
+                messageDao.removeAll();
                 //if validation is ok - go to the sign in page
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(RegisterPageActivity.this);
                 builder1.setMessage("Go to sign in page");

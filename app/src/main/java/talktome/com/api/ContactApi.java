@@ -222,5 +222,19 @@ public class ContactApi {
             }
         });
     }
+    public void SendTokenToServer(String user_id, String token){
+        Call<Void> call = webServiceApi.SendTokenToServer(user_id,token);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call <Void> call, Response<Void> response) {
+                Void check = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.printf("here");
+            }
+        });
+    }
 
 }

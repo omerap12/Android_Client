@@ -58,6 +58,7 @@ public class ChatMessagesActivity extends AppCompatActivity {
         conversationDB = Room.databaseBuilder(getApplicationContext(), ConversationDB.class, "ConversationDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         conversationDao = conversationDB.conversationDao();
 
+
         Bundle fromIntent = getIntent().getExtras();
         if (fromIntent != null) {
             this.userName = fromIntent.getString("userName");

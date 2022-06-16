@@ -20,4 +20,7 @@ public interface ContactDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Contact ... contacts);
+
+    @Query("DELETE FROM contact")
+    void removeAll();
 }

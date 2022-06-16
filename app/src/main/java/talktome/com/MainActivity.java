@@ -16,6 +16,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private ConversationDao conversationDao;
     private IsOkDao isOkDao;
     private IsOkDB isOkDB;
+    private String newToken;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
