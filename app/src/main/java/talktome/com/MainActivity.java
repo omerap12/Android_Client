@@ -16,6 +16,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -49,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, instanceIdResult -> {
+            String newToken = instanceIdResult.getToken();
+        });
+
         //all room data bases
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         contactDao = db.contactDao();
@@ -58,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         conversationDao = conversationDB.conversationDao();
 
         ContactApi contactApi = new ContactApi(messageDao, contactDao, conversationDao);
-        contactApi.GetTokenFronServer("TSM_Omer");
 
         /**
          * Getting the contacts of specific User
