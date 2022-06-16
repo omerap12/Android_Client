@@ -113,6 +113,9 @@ public class RegisterPageActivity extends AppCompatActivity {
                 MessageDao messageDao = messageDB.messageDao();
                 ContactApi contactApi = new ContactApi(messageDao,contactDao,conversationDao);
                 contactApi.AddNewUserToApp(user_name,nick_name,password1,"localhost:7030");
+                contactDao.removeAll();
+                conversationDao.removeAll();
+                messageDao.removeAll();
                 //if validation is ok - go to the sign in page
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(RegisterPageActivity.this);
                 builder1.setMessage("Go to sign in page");

@@ -44,7 +44,6 @@ public class ContactsChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_chat);
-
         //get the user name that is registered
         Bundle user_registered = getIntent().getExtras();
         if (user_registered != null) {
@@ -60,6 +59,7 @@ public class ContactsChatActivity extends AppCompatActivity {
         messageDao = messageDB.messageDao();
 
         contactApi = new ContactApi(messageDao, contactDao, conversationDao);
+        contactApi.getContactsOfUser(this.userName);
 
         FloatingActionButton addContactButton = findViewById(R.id.addContactButton);
         addContactButton.setOnClickListener(v -> {
@@ -67,7 +67,6 @@ public class ContactsChatActivity extends AppCompatActivity {
             i.putExtra("userName", userName);
             startActivity(i);
         });
-        contactApi.getContactsOfUser(this.userName);
 
         Conversations = conversationDao.index();
         Contacts = contactDao.index();
@@ -78,7 +77,7 @@ public class ContactsChatActivity extends AppCompatActivity {
 
         TextView tvUserName = findViewById(R.id.chat_user_name_connected);
         tvUserName.setText(this.userName);
-        contactApi.getContactsOfUser(this.userName);
+//        contactApi.getContactsOfUser(this.userName);
         onResume();
 
         //clicking on one of the contacts in the list of contacts

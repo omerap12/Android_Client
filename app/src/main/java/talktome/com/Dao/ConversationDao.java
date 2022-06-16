@@ -22,4 +22,8 @@ public interface ConversationDao {
     @Insert
     void insert(Conversation ... conversations);
 
+    @Query("DELETE FROM conversation")
+    void removeAll();
+
+
 }

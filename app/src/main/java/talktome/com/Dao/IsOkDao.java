@@ -15,4 +15,7 @@ public interface IsOkDao {
 
     @Delete
     void delete(isOk... isOks);
+
+    @Query("DELETE FROM isOk")
+    void removeAll();
 }
