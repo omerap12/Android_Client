@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, instanceIdResult -> {
+            newToken = instanceIdResult.getToken();
+        });
         //all room data bases
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         contactDao = db.contactDao();
@@ -137,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                     if (response.code() == 200){
                         Intent i = new Intent(MainActivity.this, ContactsChatActivity.class);
                         i.putExtra("userName", user_name);
+                        i.putExtra("token",newToken);
                         startActivity(i);
                     }
                     else {

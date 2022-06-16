@@ -58,6 +58,7 @@ public class ContactsChatActivity extends AppCompatActivity {
         Bundle user_registered = getIntent().getExtras();
         if (user_registered != null) {
             this.userName = user_registered.getString("userName");
+            this.newToken = user_registered.getString("token");
         }
 
         FloatingActionButton addContactButton = findViewById(R.id.addContactButton);
@@ -69,12 +70,6 @@ public class ContactsChatActivity extends AppCompatActivity {
 
         TextView tvUserName = findViewById(R.id.chat_user_name_connected);
         tvUserName.setText(this.userName);
-
-
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(ContactsChatActivity.this, instanceIdResult -> {
-            newToken = instanceIdResult.getToken();
-            //gey
-        });
 
         db = Room.databaseBuilder(getApplicationContext(), AppDB.class, "ContactsDB").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         contactDao = db.contactDao();
@@ -105,11 +100,6 @@ public class ContactsChatActivity extends AppCompatActivity {
         lvContacts.setClickable(true);
         lvContacts.setHasFixedSize(true);
         getContactsOfUser(this.userName);
-
-        //contactApi.getContactsOfUser(this.userName);
-
-//        contactsListAdapter.setContactsList(Contacts);
-//        contactsListAdapter.setConversationsList(Conversations);
 
     }
 
