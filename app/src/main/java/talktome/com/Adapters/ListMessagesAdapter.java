@@ -21,6 +21,8 @@ public class ListMessagesAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<Message> messages;
     private String currentUser;
+    private SentMessageHolder sentMessageHolder;
+    private ReceivedMessageHolder receivedMessageHolder;
 
     public ListMessagesAdapter(Context context, List<Message> listOfMessages, String currentUserID) {
         this.messages = listOfMessages;
@@ -31,31 +33,36 @@ public class ListMessagesAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-
         if (viewType == SENT_FROM_ME) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.message_from_me, parent, false);
-            return new SentMessageHolder(view);
+            sentMessageHolder = new SentMessageHolder(view);
+            return sentMessageHolder;
         } else if (viewType == RECEIVED_FROM_OTHER) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.message_from_other, parent, false);
-            return new ReceivedMessageHolder(view);
+            receivedMessageHolder = new ReceivedMessageHolder(view);
+            return receivedMessageHolder;
         }
-
         return null;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Message message = (Message) messages.get(position);
-
-        switch (holder.getItemViewType()) {
-            case SENT_FROM_ME:
-                ((SentMessageHolder) holder).bind(message);
-                break;
-            case RECEIVED_FROM_OTHER:
-                ((ReceivedMessageHolder) holder).bind(message);
+        if (message.From.equals(this.currentUser)) {
+            sentMessageHolder.bind(message);
         }
+        else {
+            receivedMessageHolder.bind(message);
+        }
+//        switch (holder.getItemViewType()) {
+//            case SENT_FROM_ME:
+//                ((SentMessageHolder) holder).bind(message);
+//                break;
+//            case RECEIVED_FROM_OTHER:
+//                ((ReceivedMessageHolder) holder).bind(message);
+//        }
     }
 
     @Override
@@ -70,7 +77,7 @@ public class ListMessagesAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        Message message = (Message) messages.get(position);
+        Message message = messages.get(position);
         if (message.From.equals(this.currentUser)) {
             // If the current user is the sender of the message
             return SENT_FROM_ME;
