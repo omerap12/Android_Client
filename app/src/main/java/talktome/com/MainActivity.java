@@ -47,15 +47,15 @@ public class MainActivity extends AppCompatActivity {
     private ConversationDao conversationDao;
     private IsOkDao isOkDao;
     private IsOkDB isOkDB;
+    private String newToken;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MainActivity.this, instanceIdResult -> {
-            String newToken = instanceIdResult.getToken();
+            newToken = instanceIdResult.getToken();
         });
 
         //all room data bases
@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                     //user name and password are correct
                     if (response.code() == 200){
                         Intent i = new Intent(MainActivity.this, ContactsChatActivity.class);
+                        contactApi.SendTokenToServer(user_name,newToken);
                         i.putExtra("userName", user_name);
                         startActivity(i);
                     }
