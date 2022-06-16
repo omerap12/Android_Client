@@ -60,10 +60,14 @@ public class ChatMessagesActivity extends AppCompatActivity {
         messageDao = messageDB.messageDao();
 
         //getting all the messages from the server
-        //TODO - check the function
+
         ContactApi contactApi = new ContactApi(messageDao,contactDao,conversationDao);
         contactApi.getMessagesBetweenUsers(this.userName,this.contactName);
         listOfMessages = messageDao.getMessagesBetweenUsers(this.userName, this.contactName);
+        /**
+         * DO-NOT change the removeAll() position.
+         */
+        messageDao.removeAll();
         MessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
         MessageAdapter = new ListMessagesAdapter(this, listOfMessages, this.userName);
         MessageRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -83,7 +87,6 @@ public class ChatMessagesActivity extends AppCompatActivity {
                 //                messageDao.insert(new Message(this.userName, this.contactName, text, formatter.format(date)));
 
                 //sending the message to the server
-                //TODO check the function
                 contactApi.sendMessageFromUserIdToId(this.userName,this.contactName,text);
                 listOfMessages.add(new Message(this.userName, this.contactName, text, formatter.format(date)));
                 textInput.setText("");
