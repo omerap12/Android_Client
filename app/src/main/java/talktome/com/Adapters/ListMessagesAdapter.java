@@ -17,11 +17,11 @@ public class ListMessagesAdapter extends RecyclerView.Adapter {
 
     private static final int SENT_FROM_ME = 1;
     private static final int RECEIVED_FROM_OTHER = 2;
-
     LayoutInflater inflater;
     private Context mContext;
     private List<Message> messages;
     private String currentUser;
+
     public ListMessagesAdapter(Context context, List<Message> listOfMessages, String currentUserID) {
         this.messages = listOfMessages;
         this.mContext = context;
@@ -71,8 +71,7 @@ public class ListMessagesAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         Message message = (Message) messages.get(position);
-
-        if (message.From.equals(currentUser)) {
+        if (message.From.equals(this.currentUser)) {
             // If the current user is the sender of the message
             return SENT_FROM_ME;
         } else {
@@ -83,5 +82,9 @@ public class ListMessagesAdapter extends RecyclerView.Adapter {
 
     List<Message> getListMessages(){
         return messages;
+    }
+
+    public void setListMessages(List<Message> list) {
+        this.messages = list;
     }
 }

@@ -117,8 +117,11 @@ public class ContactsChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        getContactsOfUser(this.userName);
         Contacts.clear();
         Contacts.addAll(contactDao.index());
+        Conversations.clear();
+        Conversations.addAll(conversationDao.index());
         contactsListAdapter.notifyDataSetChanged();
         lvContacts.setVisibility(View.VISIBLE);
     }
