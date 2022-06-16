@@ -24,6 +24,7 @@ import talktome.com.DB.MessageDB;
 import talktome.com.Dao.ContactDao;
 import talktome.com.Dao.ConversationDao;
 import talktome.com.Dao.MessageDao;
+import talktome.com.api.ContactApi;
 
 public class ChatMessagesActivity extends AppCompatActivity {
     private RecyclerView MessageRecycler;
@@ -60,7 +61,8 @@ public class ChatMessagesActivity extends AppCompatActivity {
 
         //getting all the messages from the server
         //TODO - check the function
-        //contactApi.getMessagesBetweenUsers(this.userName,this.contactName);
+        ContactApi contactApi = new ContactApi(messageDao,contactDao,conversationDao);
+        contactApi.getMessagesBetweenUsers(this.userName,this.contactName);
         listOfMessages = messageDao.getMessagesBetweenUsers(this.userName, this.contactName);
         MessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
         MessageAdapter = new ListMessagesAdapter(this, listOfMessages, this.userName);
@@ -82,7 +84,7 @@ public class ChatMessagesActivity extends AppCompatActivity {
 
                 //sending the message to the server
                 //TODO check the function
-                //contactApi.sendMessageFromUserIdToId(this.userName,this.contactName,text);
+                contactApi.sendMessageFromUserIdToId(this.userName,this.contactName,text);
                 listOfMessages.add(new Message(this.userName, this.contactName, text, formatter.format(date)));
                 textInput.setText("");
                 onResume();
