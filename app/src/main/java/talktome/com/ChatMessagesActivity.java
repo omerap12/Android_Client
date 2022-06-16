@@ -59,6 +59,7 @@ public class ChatMessagesActivity extends AppCompatActivity {
         messageDao = messageDB.messageDao();
 
         //getting all the messages from the server
+        //TODO - check the function
         //contactApi.getMessagesBetweenUsers(this.userName,this.contactName);
         listOfMessages = messageDao.getMessagesBetweenUsers(this.userName, this.contactName);
         MessageRecycler = (RecyclerView) findViewById(R.id.recycler_gchat);
@@ -80,7 +81,8 @@ public class ChatMessagesActivity extends AppCompatActivity {
                 //                messageDao.insert(new Message(this.userName, this.contactName, text, formatter.format(date)));
 
                 //sending the message to the server
-                contactApi.sendMessageFromUserIdToId(this.userName,this.contactName,text);
+                //TODO check the function
+                //contactApi.sendMessageFromUserIdToId(this.userName,this.contactName,text);
                 listOfMessages.add(new Message(this.userName, this.contactName, text, formatter.format(date)));
                 textInput.setText("");
                 onResume();
